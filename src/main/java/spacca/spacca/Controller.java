@@ -1,0 +1,334 @@
+package spacca.spacca;
+
+import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
+import javafx.scene.paint.Color;
+import javafx.stage.Stage;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
+
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+
+public class Controller {
+    @FXML
+    private Stage stage;
+    private Scene scene;
+    private Parent root;
+    @FXML
+    private void gioca(ActionEvent event) throws IOException {
+        Parent root = FXMLLoader.load(getClass().getResource("login-view.fxml"));
+        Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+        Scene scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
+    }
+    @FXML
+    private void loginPlayer(ActionEvent event) throws IOException {
+        Parent root = FXMLLoader.load(getClass().getResource("login_utente-view.fxml"));
+        Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+        Scene scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
+    }
+    @FXML
+    private void loginAdmin(ActionEvent event) throws IOException {
+        Parent root = FXMLLoader.load(getClass().getResource("login_admin-view.fxml"));
+        Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+        Scene scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
+    }
+    @FXML
+    private ChoiceBox<String> sfidante1;
+
+    @FXML
+    private ChoiceBox<String> sfidante2;
+
+    @FXML
+    public void initialize() {
+        if (sfidante1 == null || sfidante2 == null) {
+            System.err.println("Le ChoiceBox non sono state iniettate correttamente!");
+        } else {
+            // Popola le ChoiceBox con gli usernames presenti nel file admin_credentials.json
+            popolaChoiceBox();
+        }
+    }
+
+    @FXML
+    public void popolaChoiceBox() {
+        // Carica gli username degli utenti presenti in admin_credentials.json
+        List<String> usernames = caricaUsernameDaFile();
+
+        // Verifica che gli username siano stati caricati correttamente
+        if (usernames != null && !usernames.isEmpty()) {
+            // Popola le ChoiceBox con gli username degli utenti
+            sfidante1.getItems().addAll(usernames);
+            sfidante2.getItems().addAll(usernames);
+        } else {
+            System.out.println("Nessun utente trovato");
+        }
+    }
+
+    private List<String> caricaUsernameDaFile() {
+        List<String> usernames = new ArrayList<>();
+
+        try {
+            JSONParser parser = new JSONParser();
+            Object obj = parser.parse(new FileReader("src/main/resources/spacca/spacca/admin_credentials.json"));
+
+            JSONArray userList = (JSONArray) obj;
+
+            // Estrai gli username dalla lista degli utenti nel file JSON
+            for (Object user : userList) {
+                JSONObject userObject = (JSONObject) user;
+                String username = (String) userObject.get("username");
+                usernames.add(username);
+            }
+        } catch (IOException | ParseException e) {
+            e.printStackTrace();
+        }
+
+        return usernames;
+    }
+
+    @FXML
+    private TextField usernameField;
+
+    @FXML
+    private TextField passwordField;
+
+    @FXML
+    private Label loginMessageLabel;
+
+    private String usernameUtenteLoggato;
+
+    public void setUsernameUtenteLoggato(String username) {
+        this.usernameUtenteLoggato = username;
+    }
+
+    @FXML
+    private void accediAdmin(ActionEvent event) throws IOException {
+        // Recupera le credenziali inserite dall'utente
+        String username = usernameField.getText();
+        String password = passwordField.getText();
+
+        // Verifica le credenziali utilizzando la classe LoginManager
+        boolean accessoConsentito = LoginManager.verificaCredenziali(username, password);
+
+        if (accessoConsentito) {
+            System.out.println("Accesso effettuato come utente admin "+ username);
+            usernameUtenteLoggato=username;
+            // Carica la pagina crea_lobby_admin-view.fxml
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("crea_lobby_admin-view.fxml"));
+            Parent root = loader.load();
+
+            // Ottieni il controller della nuova vista
+            Controller accessoUtenteController = loader.getController();
+            // Imposta il nome utente nel nuovo controller
+            accessoUtenteController.setUsernameUtenteLoggato(username);
+
+            Scene scene = new Scene(root);
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            stage.setScene(scene);
+            stage.show();
+        } else {
+            loginMessageLabel.setText("Nome utente o password invalidi, riprovare.");
+            loginMessageLabel.setTextFill(Color.RED);
+            System.out.println("Errore di autenticazione");
+        }
+    }
+
+    @FXML
+    private void accediUtente(ActionEvent event) throws IOException {
+        // Recupera le credenziali inserite dall'utente
+        String username = usernameField.getText();
+
+        // Verifica le credenziali utilizzando la classe LoginManager
+        boolean accessoConsentito = LoginManager.verificaUtente(username);
+
+        if (accessoConsentito) {
+            setUsernameUtenteLoggato(username);
+            System.out.println("Accesso effettuato come utente "+ username);
+
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("accesso_lobby_utente-view.fxml"));
+            Parent root = loader.load();
+
+            // Ottieni il controller della nuova vista
+            Controller accessoUtenteController = loader.getController();
+            // Imposta il nome utente nel nuovo controller
+            accessoUtenteController.setUsernameUtenteLoggato(username);
+
+            Scene scene = new Scene(root);
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            stage.setScene(scene);
+            stage.show();
+        } else {
+            loginMessageLabel.setText("Il nome utente inserito non è valido, riprova!");
+            loginMessageLabel.setTextFill(Color.RED);
+            System.out.println("Errore di autenticazione");
+        }
+    }
+
+    @FXML
+    private TextField usernameRegistrationField;
+
+    @FXML
+    private TextField passwordRegistrationField;
+
+    @FXML
+    private Label registrationMessageLabel1;
+
+    @FXML
+    private void registrati(ActionEvent event) throws IOException {
+        // Recupera i dati inseriti dall'utente
+        String username = usernameRegistrationField.getText();
+        String password = passwordRegistrationField != null ? passwordRegistrationField.getText() : null;
+        // Registra l'utente utilizzando la classe LoginManager
+        boolean registrazioneAvvenuta = LoginManager.registraUtente(username, password);
+
+        if (registrazioneAvvenuta) {
+            registrationMessageLabel1.setText("Registrazione avvenuta con successo.");
+            registrationMessageLabel1.setTextFill(Color.GREEN);
+        } else {
+            registrationMessageLabel1.setText("Si è verificato un errore durante la registrazione.");
+            registrationMessageLabel1.setTextFill(Color.RED);
+        }
+    }
+
+    @FXML
+    private void creaPartita(ActionEvent event) throws IOException {
+        // Creazione di un'istanza di Partita
+        Partita partita = new Partita();
+
+        // Acquisizione degli sfidanti selezionati dalle ChoiceBox
+        String sfidanteScelto1 = sfidante1.getValue();
+        String sfidanteScelto2 = sfidante2.getValue();
+
+        // Aggiunta degli sfidanti all'istanza di Partita
+        if (sfidanteScelto1 != null && sfidanteScelto2 != null) {
+            partita.aggiungiSfidante(sfidanteScelto1);
+            partita.aggiungiSfidante(sfidanteScelto2);
+        }
+
+        // Salvataggio della partita
+        partita.salvaPartita();
+    }
+
+    @FXML
+    private TextField codicePartita;
+
+    @FXML
+    private Label accessoLabel;
+
+    @FXML
+    private void entraInGioco(ActionEvent event) throws IOException {
+        // Recupera il codice della partita inserito dall'utente
+        String codicePartitaInserito = codicePartita.getText();
+
+        // Controlla se il codice della partita esiste nel file JSON
+        boolean partitaEsistente = controlloCodicePartita(codicePartitaInserito);
+
+        if (partitaEsistente) {
+            // Aggiungi lo username dell'utente alla lista degli sfidanti della partita
+            aggiungiSfidantePartita(codicePartitaInserito, usernameUtenteLoggato);
+
+        } else {
+            accessoLabel.setText("Impossibile accedere alla partita!");
+            accessoLabel.setTextFill(Color.RED);
+            System.out.println("Errore: Partita non trovata.");
+            // Gestisci l'errore visualizzando un messaggio all'utente o eseguendo altre azioni
+        }
+    }
+
+
+    private boolean controlloCodicePartita(String codicePartita) {
+        JSONParser parser = new JSONParser();
+
+        try (FileReader reader = new FileReader("src/main/resources/spacca/spacca/partite.json")) {
+            // Parsa il file JSON delle partite come un array JSON
+            JSONArray partite = (JSONArray) parser.parse(reader);
+
+            // Itera attraverso le partite nel file JSON
+            for (Object partitaObj : partite) {
+                JSONObject partita = (JSONObject) partitaObj;
+                // Controlla se il codice della partita fornito corrisponde a quello nel JSON
+                String codicePartitaJSON = (String) partita.get("codice");
+                if (codicePartita.equals(codicePartitaJSON)) {
+                    return true;
+                }
+            }
+
+        } catch (IOException | ParseException e) {
+            e.printStackTrace();
+        }
+
+        return false; // In caso di eccezione o se il codice non corrisponde, restituisce false
+    }
+
+
+    private void aggiungiSfidantePartita(String codicePartita, String nuovoSfidante) {
+        // Leggi il file JSON delle partite
+        JSONParser parser = new JSONParser();
+        try (FileReader reader = new FileReader("src/main/resources/spacca/spacca/partite.json")) {
+            // Parsa il file JSON come un array
+            JSONArray jsonArray = (JSONArray) parser.parse(reader);
+
+            // Itera su ciascun oggetto JSONObject nell'array
+            for (Object obj : jsonArray) {
+                JSONObject jsonObject = (JSONObject) obj;
+
+                // Ottieni il codice della partita corrente
+                String codicePartitaJSON = (String) jsonObject.get("codice");
+
+                // Se il codice della partita corrente corrisponde a quello inserito
+                if (codicePartita.equals(codicePartitaJSON)) {
+                    // Ottieni l'array "sfidanti" dal JSONObject corrente
+                    JSONArray sfidanti = (JSONArray) jsonObject.get("sfidanti");
+
+                    // Controlla se lo sfidante è già presente nell'array
+                    if (!sfidanti.contains(nuovoSfidante)) {
+                        // Aggiungi il nuovo sfidante all'array "sfidanti"
+                        sfidanti.add(nuovoSfidante);
+
+                        // Salva le modifiche nel file JSON
+                        try (FileWriter file = new FileWriter("src/main/resources/spacca/spacca/partite.json")) {
+                            file.write(jsonArray.toJSONString());
+                            file.flush();
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+
+                        System.out.println("Sfidante aggiunto alla partita con successo.");
+                    } else {
+                        System.out.println("Lo sfidante è già presente nella partita.");
+                    }
+                    // Esci dal loop dopo aver aggiunto o verificato lo sfidante nella partita corretta
+                    return;
+                }
+            }
+
+            // Se nessuna partita con il codice corrispondente è stata trovata
+            System.out.println("Partita non trovata.");
+
+        } catch (IOException | ParseException e) {
+            e.printStackTrace();
+        }
+    }
+
+
+
+}
