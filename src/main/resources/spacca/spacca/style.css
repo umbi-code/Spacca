@@ -1,0 +1,16 @@
+
+.custom-button {
+    -fx-font-family: Arial;
+    -fx-font-size: 26px;
+    -fx-background-color:  #FF5555;
+    -fx-background-radius: 20 20 20 20;
+    -fx-text-fill: white;
+}
+
+.custom-button-hello {
+    -fx-font-family: Arial;
+    -fx-font-size: 26px;
+    -fx-background-color:  white;
+    -fx-background-radius: 20 20 20 20;
+    -fx-text-fill: #FF5555;
+}
