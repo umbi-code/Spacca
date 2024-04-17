@@ -9,6 +9,8 @@ import javafx.scene.Scene;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import org.json.simple.JSONArray;
@@ -20,6 +22,7 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,6 +31,7 @@ public class Controller {
     private Stage stage;
     private Scene scene;
     private Parent root;
+
     @FXML
     private void gioca(ActionEvent event) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("login-view.fxml"));
@@ -36,6 +40,22 @@ public class Controller {
         stage.setScene(scene);
         stage.show();
     }
+
+    @FXML
+    private void esci(ActionEvent event) throws IOException {
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        stage.close();
+    }
+
+    @FXML
+    private void toMenu(ActionEvent event) throws IOException {
+        Parent root = FXMLLoader.load(getClass().getResource("hello-view.fxml"));
+        Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+        Scene scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
+    }
+
     @FXML
     private void loginPlayer(ActionEvent event) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("login_utente-view.fxml"));
@@ -328,6 +348,7 @@ public class Controller {
             e.printStackTrace();
         }
     }
+
 
 
 

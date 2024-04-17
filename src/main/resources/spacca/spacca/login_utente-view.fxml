@@ -12,7 +12,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="spacca.spacca.Controller">
+<AnchorPane prefHeight="456.0" prefWidth="691.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="spacca.spacca.Controller">
     <children>
         <GridPane alignment="CENTER" prefHeight="400.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
             <columnConstraints>
@@ -25,7 +25,7 @@
             <children>
                 <FlowPane alignment="CENTER" columnHalignment="CENTER" orientation="VERTICAL" prefHeight="132.0" prefWidth="822.0" GridPane.rowIndex="1">
                     <children>
-                        <Text fill="#0900ff" strokeType="OUTSIDE" strokeWidth="0.0" text="Oppure registrati!" textAlignment="CENTER" wrappingWidth="435.0185546875">
+                        <Text fill="#ff5555" strokeType="OUTSIDE" strokeWidth="0.0" text="Oppure registrati!" textAlignment="CENTER" wrappingWidth="435.0185546875">
                             <font>
                                 <Font size="34.0" />
                             </font>
@@ -36,12 +36,12 @@
                             </FlowPane.margin>
                         </TextField>
                         <Label fx:id="registrationMessageLabel1" alignment="CENTER" contentDisplay="CENTER" prefHeight="17.0" prefWidth="292.0" textAlignment="CENTER" />
-                        <Button fx:id="registraUtente_button" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#registrati" style="-fx-background-color: blue; -fx-background-radius: 20; -fx-border-radius: 20;" text="Registrati" textFill="WHITE" />
+                        <Button fx:id="registraUtente_button" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#registrati" style="-fx-background-color: #FF5555; -fx-background-radius: 20; -fx-border-radius: 20;" text="Registrati" textFill="WHITE" />
                     </children>
                 </FlowPane>
                 <FlowPane alignment="CENTER" columnHalignment="CENTER" orientation="VERTICAL" prefHeight="187.0" prefWidth="580.0">
                     <children>
-                        <Text fill="#0900ff" strokeType="OUTSIDE" strokeWidth="0.0" text="Accedi come Utente" textAlignment="CENTER" wrappingWidth="435.0185546875">
+                        <Text fill="#ff5555" strokeType="OUTSIDE" strokeWidth="0.0" text="Accedi come Utente" textAlignment="CENTER" wrappingWidth="435.0185546875">
                             <font>
                                 <Font size="34.0" />
                             </font>
@@ -52,12 +52,12 @@
                             </FlowPane.margin>
                         </TextField>
                         <Label fx:id="loginMessageLabel" alignment="CENTER" contentDisplay="CENTER" prefHeight="17.0" prefWidth="237.0" textAlignment="CENTER" textFill="RED" />
-                        <Button fx:id="accediButton" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#accediUtente" style="-fx-background-color: blue; -fx-background-radius: 20; -fx-border-radius: 20;" text="Accedi" textFill="WHITE" />
+                        <Button fx:id="accediButton" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#accediUtente" style="-fx-background-color: #FF5555; -fx-background-radius: 20; -fx-border-radius: 20;" text="Accedi" textFill="WHITE" />
                     </children>
                 </FlowPane>
             </children>
         </GridPane>
-        <Button alignment="CENTER" contentDisplay="CENTER" graphicTextGap="0.0" mnemonicParsing="false" onAction="#gioca" style="-fx-background-color: transparent;" text="←" textAlignment="CENTER" textOverrun="CLIP" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="10.0">
+        <Button alignment="CENTER" contentDisplay="CENTER" graphicTextGap="0.0" mnemonicParsing="false" onAction="#gioca" style="-fx-background-color: transparent;" text="←" textAlignment="CENTER" textFill="#ff5555" textOverrun="CLIP" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="10.0">
             <font>
                 <Font size="28.0" />
             </font>
