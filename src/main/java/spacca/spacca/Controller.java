@@ -264,16 +264,24 @@ public class Controller {
 
         if (partitaEsistente) {
             // Aggiungi lo username dell'utente alla lista degli sfidanti della partita
-            aggiungiSfidantePartita(codicePartitaInserito, usernameUtenteLoggato);
-
+            String risultatoAggiunta = aggiungiSfidantePartita(codicePartitaInserito, usernameUtenteLoggato);
+            if (risultatoAggiunta.equals("successo")) {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("campo_di_gioco-view.fxml"));
+                Parent root = loader.load();
+                Scene scene = new Scene(root);
+                Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+                stage.setScene(scene);
+                stage.show();
+            } else {
+                accessoLabel.setText(risultatoAggiunta);
+                accessoLabel.setTextFill(Color.RED);
+            }
         } else {
             accessoLabel.setText("Impossibile accedere alla partita!");
             accessoLabel.setTextFill(Color.RED);
             System.out.println("Errore: Partita non trovata.");
-            // Gestisci l'errore visualizzando un messaggio all'utente o eseguendo altre azioni
         }
     }
-
 
     private boolean controlloCodicePartita(String codicePartita) {
         JSONParser parser = new JSONParser();
@@ -299,8 +307,7 @@ public class Controller {
         return false; // In caso di eccezione o se il codice non corrisponde, restituisce false
     }
 
-
-    private void aggiungiSfidantePartita(String codicePartita, String nuovoSfidante) {
+    private String aggiungiSfidantePartita(String codicePartita, String nuovoSfidante) {
         // Leggi il file JSON delle partite
         JSONParser parser = new JSONParser();
         try (FileReader reader = new FileReader("src/main/resources/spacca/spacca/partite.json")) {
@@ -319,37 +326,42 @@ public class Controller {
                     // Ottieni l'array "sfidanti" dal JSONObject corrente
                     JSONArray sfidanti = (JSONArray) jsonObject.get("sfidanti");
 
-                    // Controlla se lo sfidante è già presente nell'array
-                    if (!sfidanti.contains(nuovoSfidante)) {
-                        // Aggiungi il nuovo sfidante all'array "sfidanti"
-                        sfidanti.add(nuovoSfidante);
+                        // Se lo sfidante NON è già presente nell'array sfidanti e c'è spazio, allora aggiungilo
+                        if (!sfidanti.contains(nuovoSfidante) && sfidanti.size() < 2) {
+                            // Aggiungi il nuovo sfidante all'array "sfidanti"
+                            sfidanti.add(nuovoSfidante);
 
-                        // Salva le modifiche nel file JSON
-                        try (FileWriter file = new FileWriter("src/main/resources/spacca/spacca/partite.json")) {
-                            file.write(jsonArray.toJSONString());
-                            file.flush();
-                        } catch (IOException e) {
-                            e.printStackTrace();
+                            // Salva le modifiche nel file JSON
+                            try (FileWriter file = new FileWriter("src/main/resources/spacca/spacca/partite.json")) {
+                                file.write(jsonArray.toJSONString());
+                                file.flush();
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+
+                            System.out.println("Sfidante aggiunto alla partita con successo.");
+                            return "successo";
+                        } else {
+                            // ...altrimenti se lo sfidante è presente nell'array sfidanti, allora fallo entrare
+                            if (sfidanti.contains(nuovoSfidante)) {
+                                return "successo";
+                            } else {
+                                return "La partita è piena, non è possibile aggiungere altri sfidanti.";
+                            }
+
                         }
 
-                        System.out.println("Sfidante aggiunto alla partita con successo.");
-                    } else {
-                        System.out.println("Lo sfidante è già presente nella partita.");
-                    }
-                    // Esci dal loop dopo aver aggiunto o verificato lo sfidante nella partita corretta
-                    return;
                 }
             }
 
             // Se nessuna partita con il codice corrispondente è stata trovata
-            System.out.println("Partita non trovata.");
+            return "Partita non trovata.";
 
         } catch (IOException | ParseException e) {
             e.printStackTrace();
+            return "Errore durante l'aggiunta dello sfidante.";
         }
     }
-
-
 
 
 }
