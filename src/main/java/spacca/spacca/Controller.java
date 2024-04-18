@@ -326,37 +326,46 @@ public class Controller {
                     // Ottieni l'array "sfidanti" dal JSONObject corrente
                     JSONArray sfidanti = (JSONArray) jsonObject.get("sfidanti");
 
-                        // Se lo sfidante NON è già presente nell'array sfidanti e c'è spazio, allora aggiungilo
-                        if (!sfidanti.contains(nuovoSfidante) && sfidanti.size() < 2) {
-                            // Aggiungi il nuovo sfidante all'array "sfidanti"
-                            sfidanti.add(nuovoSfidante);
+                    //Utente non è in lista e la lista è vuota --> utente viene aggiunto, ma rimane in attesa
+                    if (!sfidanti.contains(nuovoSfidante) && sfidanti.size() == 0){
+                        sfidanti.add(nuovoSfidante);
 
-                            // Salva le modifiche nel file JSON
-                            try (FileWriter file = new FileWriter("src/main/resources/spacca/spacca/partite.json")) {
-                                file.write(jsonArray.toJSONString());
-                                file.flush();
-                            } catch (IOException e) {
-                                e.printStackTrace();
-                            }
-
-                            System.out.println("Sfidante aggiunto alla partita con successo.");
-                            return "successo";
-                        } else {
-                            // ...altrimenti se lo sfidante è presente nell'array sfidanti, allora fallo entrare
-                            if (sfidanti.contains(nuovoSfidante)) {
-                                return "successo";
-                            } else {
-                                return "La partita è piena, non è possibile aggiungere altri sfidanti.";
-                            }
-
+                        // Salva le modifiche nel file JSON
+                        try (FileWriter file = new FileWriter("src/main/resources/spacca/spacca/partite.json")) {
+                            file.write(jsonArray.toJSONString());
+                            file.flush();
+                        } catch (IOException e) {
+                            e.printStackTrace();
                         }
+                        System.out.println("Sfidante aggiunto alla partita con successo.");
+                        return "Attendi che un altro sfidante acceda alla partita";
+                    }
+                    //Utente non è in lista ma nella lista c'è già un giocatore --> utente viene aggiunto, partita avviata
+                    if (!sfidanti.contains(nuovoSfidante) && sfidanti.size() < 2){
+                        sfidanti.add(nuovoSfidante);
 
+                        // Salva le modifiche nel file JSON
+                        try (FileWriter file = new FileWriter("src/main/resources/spacca/spacca/partite.json")) {
+                            file.write(jsonArray.toJSONString());
+                            file.flush();
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                        System.out.println("Sfidante aggiunto alla partita con successo.");
+                        return "successo";
+                    }
+                    //Utente è in lista e la lista ha solo lui --> utente non viene aggiunto, rimane in attesa
+                    if (sfidanti.contains(nuovoSfidante) && sfidanti.size() == 1){
+                        return "Attendi che un altro sfidante acceda alla partita";
+                    }
+                    //Utente è in lista ma la lista è piena --> utente non viene aggiunto, partita avviata
+                    if (sfidanti.contains(nuovoSfidante) && sfidanti.size() == 2){
+                        return "successo";
+                    }
                 }
             }
-
             // Se nessuna partita con il codice corrispondente è stata trovata
-            return "Partita non trovata.";
-
+            return "Impossibile accedere alla partita.";
         } catch (IOException | ParseException e) {
             e.printStackTrace();
             return "Errore durante l'aggiunta dello sfidante.";
