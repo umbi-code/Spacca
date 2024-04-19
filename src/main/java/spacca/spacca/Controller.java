@@ -255,6 +255,14 @@ public class Controller {
     private Label accessoLabel;
 
     @FXML
+    private Label g1;
+
+    @FXML
+    private Label g2;
+
+    private String codicePartitaInserito;
+
+    @FXML
     private void entraInGioco(ActionEvent event) throws IOException {
         // Recupera il codice della partita inserito dall'utente
         String codicePartitaInserito = codicePartita.getText();
@@ -268,6 +276,12 @@ public class Controller {
             if (risultatoAggiunta.equals("successo")) {
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("campo_di_gioco-view.fxml"));
                 Parent root = loader.load();
+
+                // Inizializza i controlli nella vista campo_di_gioco-view.fxml
+                Controller campoDiGiocoController = loader.getController();
+                campoDiGiocoController.setCodicePartita(codicePartitaInserito);
+                campoDiGiocoController.caricaNomiGiocatori();
+
                 Scene scene = new Scene(root);
                 Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
                 stage.setScene(scene);
@@ -372,5 +386,45 @@ public class Controller {
         }
     }
 
+    public void setCodicePartita(String codice) {
+        this.codicePartitaInserito = codice;
+    }
 
+    public void caricaNomiGiocatori() {
+        // Carica i nomi dei giocatori nella vista campo_di_gioco-view.fxml
+        // Recupera l'array degli sfidanti dalla partita usando il codicePartita
+        JSONArray sfidantiPartita = getArraySfidantiFromPartita(codicePartitaInserito);
+
+        // Estrai i nomi dei giocatori dall'array e impostali nelle label g1 e g2
+        if (sfidantiPartita != null) {
+            if (sfidantiPartita.size() >= 1) {
+                g1.setText((String) sfidantiPartita.get(0));
+            }
+            if (sfidantiPartita.size() >= 2) {
+                g2.setText((String) sfidantiPartita.get(1));
+            }
+        }
+    }
+
+    private JSONArray getArraySfidantiFromPartita(String codicePartita) {
+        JSONParser parser = new JSONParser();
+        try (FileReader reader = new FileReader("src/main/resources/spacca/spacca/partite.json")) {
+            // Parsa il file JSON delle partite come un array JSON
+            JSONArray partite = (JSONArray) parser.parse(reader);
+
+            // Itera attraverso le partite nel file JSON
+            for (Object partitaObj : partite) {
+                JSONObject partita = (JSONObject) partitaObj;
+                // Controlla se il codice della partita fornito corrisponde a quello nel JSON
+                String codicePartitaJSON = (String) partita.get("codice");
+                if (codicePartita.equals(codicePartitaJSON)) {
+                    // Restituisci l'array degli sfidanti
+                    return (JSONArray) partita.get("sfidanti");
+                }
+            }
+        } catch (IOException | ParseException e) {
+            e.printStackTrace();
+        }
+        return null; // In caso di eccezione o se il codice non corrisponde, restituisce null
+    }
 }

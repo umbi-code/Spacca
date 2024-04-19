@@ -12,7 +12,7 @@
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="549.0" prefWidth="857.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="549.0" prefWidth="857.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="spacca.spacca.Controller">
    <children>
       <GridPane prefHeight="556.0" prefWidth="864.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <columnConstraints>
@@ -86,7 +86,7 @@
          </children>
       </GridPane>
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="93.0" layoutX="28.0" layoutY="228.0" stroke="#ff5555" strokeType="INSIDE" strokeWidth="4.0" width="62.0" />
-      <Button minHeight="20.0" mnemonicParsing="false" prefHeight="49.0" prefWidth="100.0" style="-fx-background-color: transparent;" text="Indietro" textAlignment="CENTER" textFill="#ff5555" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="10.0">
+      <Button minHeight="20.0" mnemonicParsing="false" prefHeight="49.0" prefWidth="100.0" onAction="#toMenu" style="-fx-background-color: transparent;" text="Indietro" textAlignment="CENTER" textFill="#ff5555" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="10.0">
          <font>
             <Font name="Arial Bold" size="15.0" />
          </font>
