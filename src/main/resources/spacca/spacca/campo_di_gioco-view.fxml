@@ -49,7 +49,7 @@
                               <Insets left="40.0" />
                            </GridPane.margin>
                            <image>
-                              <Image url="@images/Suit_Hearts_(open_clipart)%201.png" />
+                              <Image url="@images/Suit_Hearts_(open_clipart) 1.png" />
                            </image>
                         </ImageView>
                         <Label text="Giocatore 1">
@@ -62,12 +62,12 @@
                               <Insets left="30.0" />
                            </GridPane.margin>
                            <image>
-                              <Image url="@images/Suit_Hearts_(open_clipart)%201.png" />
+                              <Image url="@images/Suit_Hearts_(open_clipart) 1.png" />
                            </image>
                         </ImageView>
                         <ImageView fitHeight="17.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="1">
                            <image>
-                              <Image url="@images/Suit_Hearts_(open_clipart)%201.png" />
+                              <Image url="@images/Suit_Hearts_(open_clipart) 1.png" />
                            </image>
                            <GridPane.margin>
                               <Insets left="40.0" />
@@ -80,7 +80,7 @@
                         </Label>
                         <ImageView fitHeight="31.0" fitWidth="39.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.rowIndex="1">
                            <image>
-                              <Image url="@images/Suit_Hearts_(open_clipart)%201.png" />
+                              <Image url="@images/Suit_Hearts_(open_clipart) 1.png" />
                            </image>
                            <GridPane.margin>
                               <Insets left="30.0" />
@@ -236,7 +236,7 @@
             </FlowPane>
             <ImageView blendMode="DARKEN" fitHeight="230.0" fitWidth="266.0" nodeOrientation="INHERIT" opacity="0.25" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.rowIndex="1">
                <image>
-                  <Image url="@images/Group%203.png" />
+                  <Image url="@images/Group 3.png" />
                </image>
             </ImageView>
          </children>
