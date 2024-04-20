@@ -15,7 +15,7 @@ public class Main extends Application {
         FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("hello-view.fxml"));
         Scene homescreen = new Scene(fxmlLoader.load());
         stage.setTitle("Spacca");
-        // Imposta lo stile della finestra senza barra del titolo
+       // Imposta lo stile della finestra senza barra del titolo
         //stage.initStyle(StageStyle.UNDECORATED);
         stage.setResizable(true);
         stage.setScene(homescreen);
