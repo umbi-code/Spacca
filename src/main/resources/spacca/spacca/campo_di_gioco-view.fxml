@@ -40,7 +40,7 @@
                      <children>
                         <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
                            <GridPane.margin>
-                              <Insets left="20.0" />
+                              <Insets left="40.0" />
                            </GridPane.margin>
                            <image>
                               <Image url="@images/avatar1.png" />
@@ -48,7 +48,7 @@
                         </ImageView>
                         <Label fx:id="g1" text="Giocatore 1">
                            <GridPane.margin>
-                              <Insets left="60.0" />
+                              <Insets left="80.0" />
                            </GridPane.margin>
                         </Label>
                         <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="1">
@@ -56,12 +56,12 @@
                               <Image url="@images/avatar2.png" />
                            </image>
                            <GridPane.margin>
-                              <Insets left="20.0" />
+                              <Insets left="40.0" />
                            </GridPane.margin>
                         </ImageView>
                         <Label fx:id="g2" text="Giocatore 2" GridPane.rowIndex="1">
                            <GridPane.margin>
-                              <Insets left="60.0" />
+                              <Insets left="80.0" />
                            </GridPane.margin>
                         </Label>
                         <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1">
@@ -239,12 +239,12 @@
                   </GridPane>
                </children>
             </FlowPane>
-            <ImageView blendMode="DARKEN" fitHeight="230.0" fitWidth="266.0" nodeOrientation="INHERIT" opacity="0.25" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.rowIndex="1">
+            <ImageView blendMode="DARKEN" fitHeight="174.0" fitWidth="266.0" nodeOrientation="INHERIT" opacity="0.25" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.rowIndex="1">
                <image>
                   <Image url="@images/logotasp.png" />
                </image>
                <GridPane.margin>
-                  <Insets left="40.0" />
+                  <Insets />
                </GridPane.margin>
             </ImageView>
             <GridPane prefHeight="134.0" prefWidth="233.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
