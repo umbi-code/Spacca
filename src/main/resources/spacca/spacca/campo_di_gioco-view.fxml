@@ -43,7 +43,7 @@
                               <Insets left="40.0" />
                            </GridPane.margin>
                            <image>
-                              <Image url="@images/avatar1.png" />
+                              <Image url="@images/Avatarbl.png" />
                            </image>
                         </ImageView>
                         <Label fx:id="g1" text="Giocatore 1">
@@ -53,7 +53,7 @@
                         </Label>
                         <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="1">
                            <image>
-                              <Image url="@images/avatar2.png" />
+                              <Image url="@images/Avatarbl2.png" />
                            </image>
                            <GridPane.margin>
                               <Insets left="40.0" />
