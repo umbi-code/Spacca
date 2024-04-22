@@ -11,6 +11,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.FlowPane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import org.json.simple.JSONArray;
@@ -263,6 +264,12 @@ public class Controller {
     private String codicePartitaInserito;
 
     @FXML
+    private FlowPane flowPaneViteG1;
+
+    @FXML
+    private FlowPane flowPaneViteG2;
+
+    @FXML
     private void entraInGioco(ActionEvent event) throws IOException {
         // Recupera il codice della partita inserito dall'utente
         String codicePartitaInserito = codicePartita.getText();
@@ -281,6 +288,7 @@ public class Controller {
                 Controller campoDiGiocoController = loader.getController();
                 campoDiGiocoController.setCodicePartita(codicePartitaInserito);
                 campoDiGiocoController.caricaNomiGiocatori();
+                campoDiGiocoController.visualizzaNumeroVite();
 
                 Scene scene = new Scene(root);
                 Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
@@ -427,4 +435,58 @@ public class Controller {
         }
         return null; // In caso di eccezione o se il codice non corrisponde, restituisce null
     }
+
+
+    public void visualizzaNumeroVite() {
+        // Ottieni il numero delle vite dei giocatori dal file JSON
+        int viteGiocatore1 = getNumeroViteGiocatore("viteGiocatore1");
+        int viteGiocatore2 = getNumeroViteGiocatore("viteGiocatore2");
+        System.out.println(viteGiocatore1);
+        System.out.println(viteGiocatore2);
+
+        // Visualizza il numero delle vite nella view
+        visualizzaNumeroVite(viteGiocatore1, viteGiocatore2);
+    }
+
+    private int getNumeroViteGiocatore(String nomeChiave) {
+        JSONParser parser = new JSONParser();
+        try (FileReader reader = new FileReader("src/main/resources/spacca/spacca/partite.json")) {
+            JSONArray partite = (JSONArray) parser.parse(reader);
+            for (Object partitaObj : partite) {
+                JSONObject partita = (JSONObject) partitaObj;
+                if (partita.containsKey(nomeChiave)) {
+                    return ((Long) partita.get(nomeChiave)).intValue();
+                }
+            }
+        } catch (IOException | ParseException e) {
+            e.printStackTrace();
+        }
+        return 0; // Se non viene trovato il numero di vite nel JSON, restituisci 0
+    }
+
+    public void visualizzaNumeroVite(int viteGiocatore1, int viteGiocatore2) {
+        // Cancella eventuali ImageView preesistenti nei FlowPane
+        flowPaneViteG1.getChildren().clear();
+        flowPaneViteG2.getChildren().clear();
+
+        // Dimensioni desiderate per le immagini
+        double width = 20; // Larghezza desiderata
+        double height = 20; // Altezza desiderata
+
+        // Aggiungi le ImageView corrispondenti al numero di vite dei giocatori nel FlowPane appropriato
+        for (int i = 0; i < viteGiocatore1; i++) {
+            ImageView imageView = new ImageView(getClass().getResource("/spacca/spacca/images/vita.png").toExternalForm());
+            imageView.setFitWidth(width);
+            imageView.setFitHeight(height);
+            flowPaneViteG1.getChildren().add(imageView);
+        }
+
+        for (int i = 0; i < viteGiocatore2; i++) {
+            ImageView imageView = new ImageView(getClass().getResource("/spacca/spacca/images/vita.png").toExternalForm());
+            imageView.setFitWidth(width);
+            imageView.setFitHeight(height);
+            flowPaneViteG2.getChildren().add(imageView);
+        }
+    }
+
 }

@@ -12,7 +12,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="500.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="spacca.spacca.Controller">
+<AnchorPane prefHeight="500.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="spacca.spacca.Controller">
    <children>
       <GridPane prefHeight="400.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <columnConstraints>
@@ -28,7 +28,7 @@
          <children>
             <FlowPane prefHeight="167.0" prefWidth="230.0" GridPane.columnIndex="2" GridPane.rowIndex="1">
                <children>
-                  <GridPane prefHeight="136.0" prefWidth="266.0">
+                  <GridPane fx:id="griglia_utente" prefHeight="136.0" prefWidth="266.0">
                     <columnConstraints>
                       <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                       <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -38,80 +38,36 @@
                       <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                     </rowConstraints>
                      <children>
-                        <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
-                           <GridPane.margin>
-                              <Insets left="40.0" />
-                           </GridPane.margin>
-                           <image>
-                              <Image url="@images/Avatarbl.png" />
-                           </image>
-                        </ImageView>
-                        <Label fx:id="g1" text="Giocatore 1">
-                           <GridPane.margin>
-                              <Insets left="80.0" />
-                           </GridPane.margin>
-                        </Label>
-                        <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="1">
-                           <image>
-                              <Image url="@images/Avatarbl2.png" />
-                           </image>
-                           <GridPane.margin>
-                              <Insets left="40.0" />
-                           </GridPane.margin>
-                        </ImageView>
-                        <Label fx:id="g2" text="Giocatore 2" GridPane.rowIndex="1">
-                           <GridPane.margin>
-                              <Insets left="80.0" />
-                           </GridPane.margin>
-                        </Label>
-                        <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1">
-                           <image>
-                              <Image url="@images/vita.png" />
-                           </image>
-                           <GridPane.margin>
-                              <Insets bottom="10.0" left="10.0" />
-                           </GridPane.margin>
-                        </ImageView>
-                        <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1">
-                           <image>
-                              <Image url="@images/vita.png" />
-                           </image>
-                           <GridPane.margin>
-                              <Insets bottom="10.0" left="50.0" />
-                           </GridPane.margin>
-                        </ImageView>
-                        <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1">
-                           <image>
-                              <Image url="@images/vita.png" />
-                           </image>
-                           <GridPane.margin>
-                              <Insets bottom="10.0" left="90.0" />
-                           </GridPane.margin>
-                        </ImageView>
-                        <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.rowIndex="1">
-                           <image>
-                              <Image url="@images/vita.png" />
-                           </image>
-                           <GridPane.margin>
-                              <Insets left="90.0" />
-                           </GridPane.margin>
-                        </ImageView>
-                        <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.rowIndex="1">
-                           <image>
-                              <Image url="@images/vita.png" />
-                           </image>
-                           <GridPane.margin>
-                              <Insets left="50.0" />
-                           </GridPane.margin>
-                        </ImageView>
-                        <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.rowIndex="1">
-                           <image>
-                              <Image url="@images/vita.png" />
-                           </image>
-                           <GridPane.margin>
-                              <Insets left="10.0" />
-                           </GridPane.margin>
-                        </ImageView>
+                        <FlowPane fx:id="flowPaneViteG1" alignment="CENTER" hgap="10.0" prefHeight="200.0" prefWidth="200.0" vgap="10.0" GridPane.columnIndex="1" />
+                        <FlowPane fx:id="flowPaneViteG2" alignment="CENTER" hgap="10.0" prefHeight="200.0" prefWidth="200.0" vgap="10.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                        <FlowPane alignment="CENTER" columnHalignment="CENTER" hgap="10.0" prefHeight="200.0" prefWidth="200.0" vgap="10.0">
+                           <children>
+                              <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@images/Avatarbl.png" />
+                                 </image>
+                              </ImageView>
+                              <Label fx:id="g1" text="Giocatore 1">
+                                 <font>
+                                    <Font name="Arial" size="15.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                        </FlowPane>
+                        <FlowPane alignment="CENTER" columnHalignment="CENTER" hgap="10.0" prefHeight="200.0" prefWidth="200.0" vgap="10.0" GridPane.rowIndex="1">
+                           <children>
+                              <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@images/Avatarbl2.png" />
+                                 </image>
+                              </ImageView>
+                              <Label fx:id="g2" text="Giocatore 2">
+                                 <font>
+                                    <Font name="Arial" size="15.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                        </FlowPane>
                      </children>
                   </GridPane>
                </children>
@@ -254,16 +210,6 @@
               <rowConstraints>
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
               </rowConstraints>
-               <children>
-                  <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@images/j.jpg" />
-                     </image>
-                     <GridPane.margin>
-                        <Insets bottom="10.0" left="80.0" top="10.0" />
-                     </GridPane.margin>
-                  </ImageView>
-               </children>
             </GridPane>
             <GridPane prefHeight="173.0" prefWidth="213.0" GridPane.rowIndex="1">
               <columnConstraints>

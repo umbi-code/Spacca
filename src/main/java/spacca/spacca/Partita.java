@@ -15,11 +15,14 @@ import java.util.Random;
 public class Partita {
     private String codicePartita;
     private List<String> sfidanti;
-
+    private int viteGiocatore1;
+    private int viteGiocatore2;
     public Partita() {
         // Genera un codice partita casuale
         this.codicePartita = generaCodicePartita();
         this.sfidanti = new ArrayList<>();
+        this.viteGiocatore1 = 3;
+        this.viteGiocatore2 = 3;
     }
 
     private String generaCodicePartita() {
@@ -44,6 +47,8 @@ public class Partita {
         JSONObject partitaJson = new JSONObject();
         partitaJson.put("codice", this.codicePartita);
         partitaJson.put("sfidanti", this.sfidanti);
+        partitaJson.put("viteGiocatore1", this.viteGiocatore1);
+        partitaJson.put("viteGiocatore2", this.viteGiocatore2);
 
         // Leggi il contenuto attuale del file JSON
         JSONArray partiteJson = leggiPartite();
@@ -68,6 +73,7 @@ public class Partita {
     }
 
     private void scriviPartite(JSONArray partiteJson) {
+
         // Scrivi l'array JSON nel file
         try (FileWriter file = new FileWriter("src/main/resources/spacca/spacca/partite.json")) {
             file.write(partiteJson.toJSONString());
@@ -76,4 +82,6 @@ public class Partita {
             System.out.println("Errore durante il salvataggio della partita: " + e.getMessage());
         }
     }
+
+
 }
