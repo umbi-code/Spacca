@@ -201,7 +201,7 @@
                            <children>
                               <ImageView fitHeight="87.0" fitWidth="89.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
-                                    <Image url="@images/dorso.png" />
+                                    <Image url="@images/carta5.png" />
                                  </image>
                                  <GridPane.margin>
                                     <Insets bottom="10.0" left="10.0" />
@@ -209,7 +209,7 @@
                               </ImageView>
                               <ImageView fitHeight="87.0" fitWidth="89.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1">
                                  <image>
-                                    <Image url="@images/dorso.png" />
+                                    <Image url="@images/carta4.png" />
                                  </image>
                                  <GridPane.margin>
                                     <Insets bottom="10.0" left="10.0" />
@@ -217,7 +217,7 @@
                               </ImageView>
                               <ImageView fitHeight="87.0" fitWidth="89.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2">
                                  <image>
-                                    <Image url="@images/dorso.png" />
+                                    <Image url="@images/carta3.png" />
                                  </image>
                                  <GridPane.margin>
                                     <Insets bottom="10.0" left="10.0" />
@@ -257,7 +257,7 @@
                <children>
                   <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@images/j.jpg" />
+                        <Image url="@images/carta4.png" />
                      </image>
                      <GridPane.margin>
                         <Insets bottom="10.0" left="80.0" top="10.0" />
@@ -284,7 +284,7 @@
                   </ImageView>
                   <ImageView fitHeight="111.0" fitWidth="76.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1">
                      <image>
-                        <Image url="@images/j.jpg" />
+                        <Image url="@images/carta.png" />
                      </image>
                      <GridPane.margin>
                         <Insets left="10.0" />
