@@ -288,7 +288,7 @@ public class Controller {
                 Controller campoDiGiocoController = loader.getController();
                 campoDiGiocoController.setCodicePartita(codicePartitaInserito);
                 campoDiGiocoController.caricaNomiGiocatori();
-                campoDiGiocoController.visualizzaNumeroVite();
+                campoDiGiocoController.visualizzaNumeroVite(codicePartitaInserito);
 
                 Scene scene = new Scene(root);
                 Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
@@ -437,10 +437,10 @@ public class Controller {
     }
 
 
-    public void visualizzaNumeroVite() {
+    public void visualizzaNumeroVite(String codicePartita) {
         // Ottieni il numero delle vite dei giocatori dal file JSON
-        int viteGiocatore1 = getNumeroViteGiocatore("viteGiocatore1");
-        int viteGiocatore2 = getNumeroViteGiocatore("viteGiocatore2");
+        int viteGiocatore1 = getNumeroViteGiocatore("viteGiocatore1", codicePartita);
+        int viteGiocatore2 = getNumeroViteGiocatore("viteGiocatore2", codicePartita);
         System.out.println(viteGiocatore1);
         System.out.println(viteGiocatore2);
 
@@ -448,21 +448,25 @@ public class Controller {
         visualizzaNumeroVite(viteGiocatore1, viteGiocatore2);
     }
 
-    private int getNumeroViteGiocatore(String nomeChiave) {
-        JSONParser parser = new JSONParser();
-        try (FileReader reader = new FileReader("src/main/resources/spacca/spacca/partite.json")) {
-            JSONArray partite = (JSONArray) parser.parse(reader);
-            for (Object partitaObj : partite) {
-                JSONObject partita = (JSONObject) partitaObj;
-                if (partita.containsKey(nomeChiave)) {
-                    return ((Long) partita.get(nomeChiave)).intValue();
-                }
+
+    private int getNumeroViteGiocatore(String nomeChiave, String codicePartita) {
+    JSONParser parser = new JSONParser();
+    try (FileReader reader = new FileReader("src/main/resources/spacca/spacca/partite.json")) {
+        JSONArray partite = (JSONArray) parser.parse(reader);
+        for (Object partitaObj : partite) {
+            JSONObject partita = (JSONObject) partitaObj;
+            String codice = partita.get("codice").toString();
+            if (codice.equals(codicePartita) && partita.containsKey(nomeChiave)) {
+                System.out.println(((Long) partita.get(nomeChiave)).intValue());
+                return ((Long) partita.get(nomeChiave)).intValue();
             }
-        } catch (IOException | ParseException e) {
-            e.printStackTrace();
         }
-        return 0; // Se non viene trovato il numero di vite nel JSON, restituisci 0
+    } catch (IOException | ParseException e) {
+        e.printStackTrace();
     }
+    return 0; // Se non viene trovato il numero di vite nel JSON, restituisci 0
+}
+
 
     public void visualizzaNumeroVite(int viteGiocatore1, int viteGiocatore2) {
         // Cancella eventuali ImageView preesistenti nei FlowPane
@@ -488,5 +492,23 @@ public class Controller {
             flowPaneViteG2.getChildren().add(imageView);
         }
     }
+
+//    private boolean verificaCodicePartita(String codiceInserito) {
+//        JSONParser parser = new JSONParser();
+//        try (FileReader reader = new FileReader("src/main/resources/spacca/spacca/partite.json")) {
+//            JSONArray partite = (JSONArray) parser.parse(reader);
+//            for (Object partitaObj : partite) {
+//                JSONObject partita = (JSONObject) partitaObj;
+//                String codice = partita.get("codice").toString();
+//                if (codice.equals(codiceInserito)) {
+//                    return true;
+//                }
+//            }
+//        } catch (IOException | ParseException e) {
+//            e.printStackTrace();
+//        }
+//        return false;
+//    }
+
 
 }
