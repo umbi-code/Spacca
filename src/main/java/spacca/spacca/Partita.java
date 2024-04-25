@@ -17,6 +17,7 @@ public class Partita {
     private List<String> sfidanti;
     private int viteGiocatore1;
     private int viteGiocatore2;
+
     public Partita() {
         // Genera un codice partita casuale
         this.codicePartita = generaCodicePartita();
