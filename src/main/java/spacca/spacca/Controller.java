@@ -735,6 +735,103 @@ public class Controller {
             flowPaneViteG2.getChildren().add(imageView);
         }
     }
+    // codice crea da tes come prova
+
+    /* Campi del backend */
+    /*
+    private MazzoCarte mazzo;
+    private Mano mano;
+    private static final String URL_BASE_CARTE = "";
+/* Campi FXML */
+/*
+    @FXML
+    private TextField txtHand; // Campo per visualizzare la mano di carte
+
+    @FXML
+    private Button buttonDealHand; // Bottone per distribuire la mano
+
+    @FXML
+    private Button buttonCheckHand; // Bottone per controllare la mano
+
+    @FXML
+    private ImageView cardone; // ImageView per la prima carta
+
+    @FXML
+    private ImageView cardtwo; // ImageView per la seconda carta
+
+    @FXML
+    private ImageView cardthree; // ImageView per la terza carta
+
+    @FXML
+    private Tab statsTab; // Tab per le statistiche
+    */
+
+    /* Costruttore per il controller */
+    /*
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+
+        mazzo = new MazzoCarte();
+        buttonCheckHand.setDisable(true); // Disabilita il bottone per controllare la mano inizialmente
+    }
+    */
+    /* Metodi */
+/*
+    @FXML
+    private void onDealHand()  {
+        mano = new Mano(mazzo.distribuisciMano(3)); // Distribuisce una mano di 3 carte
+        StringBuilder result = new StringBuilder();
+        for (CartedelGioco carta :mano.getMano()){
+            result.append(carta.getAsString()).append(" ");
+        }
+
+        txtHand.setText(result.toString());
+        buttonDealHand.setDisable(true); // Disabilita il bottone per distribuire la mano dopo l'uso
+        buttonCheckHand.setDisable(false); // Abilita il bottone per controllare la mano
+*/
+        /* Mostra le carte */
+    /*
+        String cardUrl1 = URL_BASE_CARTE + mano.getMano().get(0).getUrlString();
+        String cardUrl2 = URL_BASE_CARTE + mano.getMano().get(1).getUrlString();
+        String cardUrl3 = URL_BASE_CARTE + mano.getMano().get(2).getUrlString();
+
+
+        Image card1 = new Image(cardUrl1);
+        Image card2 = new Image(cardUrl2);
+        Image card3 = new Image(cardUrl3);
+
+        cardone.setImage(card1);
+        cardtwo.setImage(card2);
+        cardthree.setImage(card3);
+
+    }
+*/
+
+    /* Resetta tutto */
+    /*
+    @FXML
+    private void onNewDeck(){
+        mazzo = new MazzoCarte();
+        buttonDealHand.setDisable(false);
+        txtHand.setText(" ");
+        txtHearts.setText(" ");
+        txtFlush.setText(" ");
+        Image backCard = new Image("/img/backside.png");
+        cardone.setImage(backCard);
+        cardtwo.setImage(backCard);
+        cardthree.setImage(backCard);
+
+        buttonCheckHand.setDisable(true);
+    }*/
+
+/*
+    @FXML
+    public void onVersion(){
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setHeaderText("Versione: v.0.0.1");
+        alert.initStyle(StageStyle.UNDECORATED);
+        alert.showAndWait();
+    }*/
 
 
     public void visualizzaCarteAlCentro() {
