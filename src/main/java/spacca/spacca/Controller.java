@@ -1,5 +1,6 @@
 package spacca.spacca;
 
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -73,6 +74,7 @@ public class Controller {
         stage.setScene(scene);
         stage.show();
     }
+
     @FXML
     private ChoiceBox<String> sfidante1;
 
@@ -269,11 +271,11 @@ public class Controller {
     @FXML
     private FlowPane flowPaneViteG2;
 
+
     @FXML
     private void entraInGioco(ActionEvent event) throws IOException {
         // Recupera il codice della partita inserito dall'utente
         String codicePartitaInserito = codicePartita.getText();
-
         // Controlla se il codice della partita esiste nel file JSON
         boolean partitaEsistente = controlloCodicePartita(codicePartitaInserito);
 
@@ -303,6 +305,238 @@ public class Controller {
             accessoLabel.setTextFill(Color.RED);
             System.out.println("Errore: Partita non trovata.");
         }
+    }
+
+    @FXML
+    private void aggiungiVitaG1() {
+        System.out.println(codicePartitaInserito);
+        String filePath = "src/main/resources/spacca/spacca/partite.json";
+
+        try {
+            // Leggi il file JSON e ottieni l'oggetto JSON della partita in corso
+            JSONParser parser = new JSONParser();
+            JSONArray partite = (JSONArray) parser.parse(new FileReader(filePath));
+            JSONObject partitaCorrente = null;
+
+            for (Object obj : partite) {
+                JSONObject partita = (JSONObject) obj;
+                String codice = (String) partita.get("codice");
+                if (codice != null && codice.equals(codicePartitaInserito)) {
+                    partitaCorrente = partita;
+                    break;
+                }
+            }
+
+            if (partitaCorrente != null) {
+                // Incrementa il valore delle vite del giocatore 1
+                int viteGiocatore1 = ((Long) partitaCorrente.get("viteGiocatore1")).intValue();
+                if (viteGiocatore1 < 8) {
+                    viteGiocatore1++;
+                    partitaCorrente.put("viteGiocatore1", viteGiocatore1);
+
+                    // Scrivi le modifiche nel file JSON
+                    try (FileWriter fileWriter = new FileWriter(filePath)) {
+                        fileWriter.write(partite.toJSONString());
+                        System.out.println("Vita aggiunta al giocatore 1 con successo");
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+
+                    // Aggiungi un'immagine del cuore della view
+                    aggiungiImmagineCuore1();
+                }
+
+            } else {
+                System.out.println("Partita non trovata.");
+            }
+
+        } catch (IOException | ParseException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @FXML
+    private void rimuoviVitaG1() {
+        System.out.println(codicePartitaInserito);
+        String filePath = "src/main/resources/spacca/spacca/partite.json";
+
+        try {
+            // Leggi il file JSON e ottieni l'oggetto JSON della partita in corso
+            JSONParser parser = new JSONParser();
+            JSONArray partite = (JSONArray) parser.parse(new FileReader(filePath));
+            JSONObject partitaCorrente = null;
+
+            for (Object obj : partite) {
+                JSONObject partita = (JSONObject) obj;
+                String codice = (String) partita.get("codice");
+                if (codice != null && codice.equals(codicePartitaInserito)) {
+                    partitaCorrente = partita;
+                    break;
+                }
+            }
+
+            if (partitaCorrente != null) {
+                // Incrementa il valore delle vite del giocatore 1
+                int viteGiocatore1 = ((Long) partitaCorrente.get("viteGiocatore1")).intValue();
+                if (viteGiocatore1 > 1) {
+                    viteGiocatore1--;
+                    partitaCorrente.put("viteGiocatore1", viteGiocatore1);
+
+                    // Scrivi le modifiche nel file JSON
+                    try (FileWriter fileWriter = new FileWriter(filePath)) {
+                        fileWriter.write(partite.toJSONString());
+                        System.out.println("Vita rimossa al giocatore 1 con successo");
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+
+                    // Rimuovi un'immagine del cuore della view
+                    rimuoviImmagineCuore1();
+                }
+
+            } else {
+                System.out.println("Partita non trovata.");
+            }
+
+        } catch (IOException | ParseException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    @FXML
+    private void aggiungiVitaG2() {
+        System.out.println(codicePartitaInserito);
+        String filePath = "src/main/resources/spacca/spacca/partite.json";
+
+        try {
+            // Leggi il file JSON e ottieni l'oggetto JSON della partita in corso
+            JSONParser parser = new JSONParser();
+            JSONArray partite = (JSONArray) parser.parse(new FileReader(filePath));
+            JSONObject partitaCorrente = null;
+
+            for (Object obj : partite) {
+                JSONObject partita = (JSONObject) obj;
+                String codice = (String) partita.get("codice");
+                if (codice != null && codice.equals(codicePartitaInserito)) {
+                    partitaCorrente = partita;
+                    break;
+                }
+            }
+
+            if (partitaCorrente != null) {
+                // Incrementa il valore delle vite del giocatore 1
+                int viteGiocatore2 = ((Long) partitaCorrente.get("viteGiocatore2")).intValue();
+                if (viteGiocatore2 < 8) {
+                    viteGiocatore2++;
+                    partitaCorrente.put("viteGiocatore2", viteGiocatore2);
+
+                    // Scrivi le modifiche nel file JSON
+                    try (FileWriter fileWriter = new FileWriter(filePath)) {
+                        fileWriter.write(partite.toJSONString());
+                        System.out.println("Vita aggiunta al giocatore 2 con successo");
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+
+                    // Rimuovi un'immagine del cuore della view
+                    aggiungiImmagineCuore2();
+                }
+
+            } else {
+                System.out.println("Partita non trovata.");
+            }
+
+        } catch (IOException | ParseException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @FXML
+    private void rimuoviVitaG2() {
+        System.out.println(codicePartitaInserito);
+        String filePath = "src/main/resources/spacca/spacca/partite.json";
+
+        try {
+            // Leggi il file JSON e ottieni l'oggetto JSON della partita in corso
+            JSONParser parser = new JSONParser();
+            JSONArray partite = (JSONArray) parser.parse(new FileReader(filePath));
+            JSONObject partitaCorrente = null;
+
+            for (Object obj : partite) {
+                JSONObject partita = (JSONObject) obj;
+                String codice = (String) partita.get("codice");
+                if (codice != null && codice.equals(codicePartitaInserito)) {
+                    partitaCorrente = partita;
+                    break;
+                }
+            }
+
+            if (partitaCorrente != null) {
+                // Incrementa il valore delle vite del giocatore 1
+                int viteGiocatore2 = ((Long) partitaCorrente.get("viteGiocatore2")).intValue();
+                if (viteGiocatore2 > 1) {
+                    viteGiocatore2--;
+                    partitaCorrente.put("viteGiocatore2", viteGiocatore2);
+
+                    // Scrivi le modifiche nel file JSON
+                    try (FileWriter fileWriter = new FileWriter(filePath)) {
+                        fileWriter.write(partite.toJSONString());
+                        System.out.println("Vita rimossa al giocatore 2 con successo");
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+
+                    // Rimuovi un'immagine del cuore della view
+                    rimuoviImmagineCuore2();
+                }
+
+            } else {
+                System.out.println("Partita non trovata.");
+            }
+
+        } catch (IOException | ParseException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    private void rimuoviImmagineCuore1() {
+        // Rimuovi l'ultima ImageView aggiunta da FlowPaneViteG1
+        ObservableList<Node> childrenG1 = flowPaneViteG1.getChildren();
+        if(!childrenG1.isEmpty()) {
+            childrenG1.remove(childrenG1.size()-1);
+        }
+    }
+
+    private void rimuoviImmagineCuore2() {
+        // Rimuovi l'ultima ImageView aggiunta da FlowPaneViteG1
+        ObservableList<Node> childrenG2 = flowPaneViteG2.getChildren();
+        if(!childrenG2.isEmpty()) {
+            childrenG2.remove(childrenG2.size()-1);
+        }
+    }
+
+    private void aggiungiImmagineCuore1() {
+        // Dimensioni desiderate per le immagini
+        double width = 20; // Larghezza desiderata
+        double height = 20; // Altezza desiderata
+
+        ImageView imageView = new ImageView(getClass().getResource("/spacca/spacca/images/vita.png").toExternalForm());
+        imageView.setFitWidth(width);
+        imageView.setFitHeight(height);
+        flowPaneViteG1.getChildren().add(imageView);
+    }
+
+    private void aggiungiImmagineCuore2() {
+        // Dimensioni desiderate per le immagini
+        double width = 20; // Larghezza desiderata
+        double height = 20; // Altezza desiderata
+
+        ImageView imageView = new ImageView(getClass().getResource("/spacca/spacca/images/vita.png").toExternalForm());
+        imageView.setFitWidth(width);
+        imageView.setFitHeight(height);
+        flowPaneViteG2.getChildren().add(imageView);
     }
 
     private boolean controlloCodicePartita(String codicePartita) {
