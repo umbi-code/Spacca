@@ -7,237 +7,137 @@
 <?import javafx.scene.text.*?>
 
 <AnchorPane prefHeight="500.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="spacca.spacca.Controller">
-   <children>
-      <GridPane prefHeight="400.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-        <columnConstraints>
-            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-        </columnConstraints>
-        <rowConstraints>
-          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-        </rowConstraints>
-         <children>
-            <FlowPane prefHeight="167.0" prefWidth="230.0" GridPane.columnIndex="2" GridPane.rowIndex="1">
-               <children>
-                  <GridPane fx:id="griglia_utente" prefHeight="136.0" prefWidth="266.0">
-                    <columnConstraints>
-                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                    </columnConstraints>
-                    <rowConstraints>
-                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                    </rowConstraints>
-                     <children>
-                        <FlowPane fx:id="flowPaneViteG1" alignment="CENTER" hgap="10.0" prefHeight="200.0" prefWidth="200.0" vgap="10.0" GridPane.columnIndex="1" />
-                        <FlowPane fx:id="flowPaneViteG2" alignment="CENTER" hgap="10.0" prefHeight="200.0" prefWidth="200.0" vgap="10.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                        <FlowPane alignment="CENTER" columnHalignment="CENTER" hgap="10.0" prefHeight="200.0" prefWidth="200.0" vgap="10.0">
-                           <children>
-                              <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
-                                 <image>
-                                    <Image url="@images/Avatarbl.png" />
-                                 </image>
-                              </ImageView>
-                              <Label fx:id="g1" text="Giocatore 1">
-                                 <font>
-                                    <Font name="Arial" size="15.0" />
-                                 </font>
-                              </Label>
-                           </children>
-                        </FlowPane>
-                        <FlowPane alignment="CENTER" columnHalignment="CENTER" hgap="10.0" prefHeight="200.0" prefWidth="200.0" vgap="10.0" GridPane.rowIndex="1">
-                           <children>
-                              <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
-                                 <image>
-                                    <Image url="@images/Avatarbl2.png" />
-                                 </image>
-                              </ImageView>
-                              <Label fx:id="g2" text="Giocatore 2">
-                                 <font>
-                                    <Font name="Arial" size="15.0" />
-                                 </font>
-                              </Label>
-                           </children>
-                        </FlowPane>
-                     </children>
-                  </GridPane>
-               </children>
-            </FlowPane>
-            <FlowPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1">
-               <children>
-                  <GridPane prefHeight="167.0" prefWidth="266.0">
-                    <columnConstraints>
-                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                    </columnConstraints>
-                    <rowConstraints>
-                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                    </rowConstraints>
-                     <children>
-                        <GridPane>
-                          <columnConstraints>
-                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                          </columnConstraints>
-                          <rowConstraints>
-                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                          </rowConstraints>
-                           <children>
-                              <ImageView fitHeight="87.0" fitWidth="89.0" pickOnBounds="true" preserveRatio="true">
-                                 <image>
-                                    <Image url="@images/dorso2.png" />
-                                 </image>
-                                 <GridPane.margin>
-                                    <Insets left="10.0" top="10.0" />
-                                 </GridPane.margin>
-                              </ImageView>
-                              <ImageView fitHeight="87.0" fitWidth="89.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1">
-                                 <image>
-                                    <Image url="@images/dorso2.png" />
-                                 </image>
-                                 <GridPane.margin>
-                                    <Insets left="10.0" top="10.0" />
-                                 </GridPane.margin>
-                              </ImageView>
-                              <ImageView fitHeight="87.0" fitWidth="89.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2">
-                                 <GridPane.margin>
-                                    <Insets left="10.0" top="10.0" />
-                                 </GridPane.margin>
-                                 <image>
-                                    <Image url="@images/dorso2.png" />
-                                 </image>
-                              </ImageView>
-                           </children>
-                        </GridPane>
-                        <Button mnemonicParsing="false" onAction="#aggiungiVitaG1" text="spara" GridPane.rowIndex="1">
-                           <GridPane.margin>
-                              <Insets left="10.0" />
-                           </GridPane.margin>
-                        </Button>
-                        <Button mnemonicParsing="false" onAction="#rimuoviVitaG1" text="carta" GridPane.rowIndex="1">
-                           <GridPane.margin>
-                              <Insets left="80.0" />
-                           </GridPane.margin>
-                        </Button>
-                     </children>
-                  </GridPane>
-               </children>
-            </FlowPane>
-            <FlowPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
-               <children>
-                  <GridPane prefHeight="160.0" prefWidth="271.0">
-                    <columnConstraints>
-                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                    </columnConstraints>
-                    <rowConstraints>
-                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                    </rowConstraints>
-                     <children>
-                        <GridPane GridPane.rowIndex="1">
-                          <columnConstraints>
-                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                          </columnConstraints>
-                          <rowConstraints>
-                            <RowConstraints />
-                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                          </rowConstraints>
-                           <children>
-                              <ImageView fitHeight="87.0" fitWidth="89.0" pickOnBounds="true" preserveRatio="true">
-                                 <image>
-                                    <Image url="@images/dorso.png" />
-                                 </image>
-                                 <GridPane.margin>
-                                    <Insets bottom="10.0" left="10.0" />
-                                 </GridPane.margin>
-                              </ImageView>
-                              <ImageView fitHeight="87.0" fitWidth="89.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1">
-                                 <image>
-                                    <Image url="@images/dorso.png" />
-                                 </image>
-                                 <GridPane.margin>
-                                    <Insets bottom="10.0" left="10.0" />
-                                 </GridPane.margin>
-                              </ImageView>
-                              <ImageView fitHeight="87.0" fitWidth="89.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2">
-                                 <image>
-                                    <Image url="@images/dorso.png" />
-                                 </image>
-                                 <GridPane.margin>
-                                    <Insets bottom="10.0" left="10.0" />
-                                 </GridPane.margin>
-                              </ImageView>
-                           </children>
-                        </GridPane>
-                        <Button mnemonicParsing="false" onAction="#aggiungiVitaG2" text="spara">
-                           <GridPane.margin>
-                              <Insets left="10.0" />
-                           </GridPane.margin>
-                        </Button>
-                        <Button mnemonicParsing="false" onAction="#rimuoviVitaG2" text="Carta">
-                           <GridPane.margin>
-                              <Insets left="70.0" />
-                           </GridPane.margin>
-                        </Button>
-                     </children>
-                  </GridPane>
-               </children>
-            </FlowPane>
-            <ImageView blendMode="DARKEN" fitHeight="174.0" fitWidth="266.0" nodeOrientation="INHERIT" opacity="0.25" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.rowIndex="1">
-               <image>
-                  <Image url="@images/logotasp.png" />
-               </image>
-               <GridPane.margin>
-                  <Insets />
-               </GridPane.margin>
-            </ImageView>
-            <GridPane prefHeight="134.0" prefWidth="233.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
-              <columnConstraints>
+    <children>
+        <GridPane alignment="CENTER" prefHeight="400.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <columnConstraints>
                 <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-              </columnConstraints>
-              <rowConstraints>
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            </columnConstraints>
+            <rowConstraints>
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-              </rowConstraints>
-            </GridPane>
-            <GridPane prefHeight="173.0" prefWidth="213.0" GridPane.rowIndex="1">
-              <columnConstraints>
-                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-              </columnConstraints>
-              <rowConstraints>
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-              </rowConstraints>
-               <children>
-                  <ImageView fitHeight="141.0" fitWidth="98.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@images/dorso.png" />
-                     </image>
-                     <GridPane.margin>
-                        <Insets left="20.0" />
-                     </GridPane.margin>
-                  </ImageView>
-                  <ImageView fitHeight="111.0" fitWidth="76.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1">
-                     <image>
-                        <Image url="@images/j.jpg" />
-                     </image>
-                     <GridPane.margin>
-                        <Insets left="10.0" />
-                     </GridPane.margin>
-                  </ImageView>
-               </children>
-            </GridPane>
-         </children>
-      </GridPane>
-      <Button minHeight="20.0" mnemonicParsing="false" onAction="#toMenu" prefHeight="49.0" prefWidth="100.0" style="-fx-background-color: transparent;" text="Indietro" textAlignment="CENTER" textFill="#ff5555" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
-         <font>
-            <Font name="Arial Bold" size="15.0" />
-         </font>
-      </Button>
-   </children>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            </rowConstraints>
+            <children>
+                <FlowPane prefHeight="167.0" prefWidth="230.0" GridPane.columnIndex="2" GridPane.rowIndex="1">
+                    <children>
+                        <GridPane fx:id="griglia_utente" prefHeight="136.0" prefWidth="266.0">
+                            <columnConstraints>
+                                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                            </columnConstraints>
+                            <rowConstraints>
+                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                            </rowConstraints>
+                            <children>
+                                <FlowPane fx:id="flowPaneViteG1" alignment="CENTER" hgap="10.0" prefHeight="200.0" prefWidth="200.0" vgap="10.0" GridPane.columnIndex="1" />
+                                <FlowPane fx:id="flowPaneViteG2" alignment="CENTER" hgap="10.0" prefHeight="200.0" prefWidth="200.0" vgap="10.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                <FlowPane alignment="CENTER" columnHalignment="CENTER" hgap="10.0" prefHeight="200.0" prefWidth="200.0" vgap="10.0">
+                                    <children>
+                                        <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                                            <image>
+                                                <Image url="@images/Avatarbl.png" />
+                                            </image>
+                                        </ImageView>
+                                        <Label fx:id="g1" text="Giocatore 1">
+                                            <font>
+                                                <Font name="Arial" size="15.0" />
+                                            </font>
+                                        </Label>
+                                    </children>
+                                </FlowPane>
+                                <FlowPane alignment="CENTER" columnHalignment="CENTER" hgap="10.0" prefHeight="200.0" prefWidth="200.0" vgap="10.0" GridPane.rowIndex="1">
+                                    <children>
+                                        <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                                            <image>
+                                                <Image url="@images/Avatarbl2.png" />
+                                            </image>
+                                        </ImageView>
+                                        <Label fx:id="g2" text="Giocatore 2">
+                                            <font>
+                                                <Font name="Arial" size="15.0" />
+                                            </font>
+                                        </Label>
+                                    </children>
+                                </FlowPane>
+                            </children>
+                        </GridPane>
+                    </children>
+                </FlowPane>
+                <ImageView blendMode="DARKEN" fitHeight="174.0" fitWidth="266.0" nodeOrientation="INHERIT" opacity="0.25" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                    <image>
+                        <Image url="@images/logotasp.png" />
+                    </image>
+                </ImageView>
+                <GridPane GridPane.columnIndex="1" GridPane.rowIndex="2">
+                    <columnConstraints>
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                    </columnConstraints>
+                    <rowConstraints>
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                    </rowConstraints>
+                    <children>
+                        <Button alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" text="Gioca la carta su te stesso" textAlignment="RIGHT" textOverrun="CLIP">
+                            <font>
+                                <Font size="10.0" />
+                            </font>
+                        </Button>
+                        <Button alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" style="-fx-background-color: ff5555; -fx-opacity: 1;" text="Gioca la carta su te stesso" GridPane.columnIndex="1">
+                            <font>
+                                <Font size="10.0" />
+                            </font>
+                        </Button>
+                    </children>
+                </GridPane>
+                <GridPane GridPane.columnIndex="1">
+                    <columnConstraints>
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                    </columnConstraints>
+                    <rowConstraints>
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                    </rowConstraints>
+                    <children>
+                        <Button alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" text="Gioca la carta su te stesso" textAlignment="RIGHT" textOverrun="CLIP">
+                            <font>
+                                <Font size="10.0" />
+                            </font>
+                        </Button>
+                        <Button alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" style="-fx-background-color: ff5555; -fx-opacity: 1;" text="Gioca la carta su te stesso" GridPane.columnIndex="1">
+                            <font>
+                                <Font size="10.0" />
+                            </font>
+                        </Button>
+                    </children>
+                </GridPane>
+                <FlowPane fx:id="spawnCarte" alignment="CENTER" hgap="10.0" prefHeight="200.0" prefWidth="200.0" vgap="10.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                    <GridPane.margin>
+                        <Insets />
+                    </GridPane.margin>
+                </FlowPane>
+                <FlowPane alignment="CENTER_LEFT" columnHalignment="CENTER" prefHeight="200.0" prefWidth="200.0">
+                    <children>
+                        <Label text="Round:">
+                            <font>
+                                <Font size="34.0" />
+                            </font>
+                        </Label>
+                        <Label text="{numero}">
+                            <font>
+                                <Font size="34.0" />
+                            </font>
+                        </Label>
+                    </children>
+                </FlowPane>
+            </children>
+        </GridPane>
+        <Button minHeight="20.0" mnemonicParsing="false" onAction="#toMenu" prefHeight="49.0" prefWidth="100.0" style="-fx-background-color: transparent;" text="Indietro" textAlignment="CENTER" textFill="#ff5555" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <font>
+                <Font name="Arial Bold" size="15.0" />
+            </font>
+        </Button>
+    </children>
 </AnchorPane>

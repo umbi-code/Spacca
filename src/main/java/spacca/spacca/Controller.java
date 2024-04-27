@@ -1,5 +1,7 @@
 package spacca.spacca;
 
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -15,17 +17,20 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
+import javax.swing.*;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class Controller {
@@ -271,6 +276,9 @@ public class Controller {
     @FXML
     private FlowPane flowPaneViteG2;
 
+    @FXML
+    private FlowPane spawnCarte;
+
 
     @FXML
     private void entraInGioco(ActionEvent event) throws IOException {
@@ -291,6 +299,7 @@ public class Controller {
                 campoDiGiocoController.setCodicePartita(codicePartitaInserito);
                 campoDiGiocoController.caricaNomiGiocatori();
                 campoDiGiocoController.visualizzaNumeroVite(codicePartitaInserito);
+                campoDiGiocoController.visualizzaCarteAlCentro();
 
                 Scene scene = new Scene(root);
                 Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
@@ -725,6 +734,64 @@ public class Controller {
             imageView.setFitHeight(height);
             flowPaneViteG2.getChildren().add(imageView);
         }
+    }
+
+
+    public void visualizzaCarteAlCentro() {
+        CarteAlCentro carteAlCentro = new CarteAlCentro();
+        ArrayList<Boolean> booleanList = carteAlCentro.CarteAlCentro();
+
+        for (int i = 0; i < booleanList.size(); i++) {
+            if(booleanList.get(i)) {
+                // Dimensioni desiderate per le immagini
+                double width = 48; // Larghezza desiderata
+                double height = 69; // Altezza desiderata
+
+                ImageView imageView = new ImageView(getClass().getResource("/spacca/spacca/images/dorso.png").toExternalForm());
+                imageView.setFitWidth(width);
+                imageView.setFitHeight(height);
+                spawnCarte.getChildren().add(imageView);
+            } else {
+                // Dimensioni desiderate per le immagini
+                double width = 48; // Larghezza desiderata
+                double height = 69; // Altezza desiderata
+
+                ImageView imageView = new ImageView(getClass().getResource("/spacca/spacca/images/dorso2.png").toExternalForm());
+                imageView.setFitWidth(width);
+                imageView.setFitHeight(height);
+                spawnCarte.getChildren().add(imageView);
+            }
+        }
+
+        // Aggiungi un ritardo di 5 secondi dopo l'esecuzione del for
+        Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(10), event -> {
+            // Codice da eseguire dopo il ritardo di 5 secondi
+            // Puoi inserire qui le istruzioni che desideri ritardare
+            // Ad esempio, puoi aggiungere altre immagini o eseguire altre operazioni
+            spawnCarte.getChildren().clear();
+            for (int i = 0; i < booleanList.size(); i++) {
+
+                // Dimensioni desiderate per le immagini
+                double width = 48; // Larghezza desiderata
+                double height = 69; // Altezza desiderata
+
+                ImageView imageView = new ImageView(getClass().getResource("/spacca/spacca/images/j.jpg").toExternalForm());
+                imageView.setFitWidth(width);
+                imageView.setFitHeight(height);
+                spawnCarte.getChildren().add(imageView);
+            }
+
+            Collections.shuffle(booleanList);
+            // Stampa dell'ArrayList di booleani
+            System.out.println("ArrayList di booleani mischiato:");
+            for (int i = 0; i < booleanList.size(); i++) {
+                System.out.println("Elemento " + i + ": " + booleanList.get(i));
+
+            }
+
+        }));
+        timeline.play();
+
     }
 
 //    private boolean verificaCodicePartita(String codiceInserito) {
