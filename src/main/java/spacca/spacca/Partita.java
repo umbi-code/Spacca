@@ -17,6 +17,10 @@ public class Partita {
     private List<String> sfidanti;
     private int viteGiocatore1;
     private int viteGiocatore2;
+    private List<Boolean> carteAlCentro;
+    private boolean turnoG1;
+
+
 
     public Partita() {
         // Genera un codice partita casuale
@@ -24,6 +28,33 @@ public class Partita {
         this.sfidanti = new ArrayList<>();
         this.viteGiocatore1 = 3;
         this.viteGiocatore2 = 3;
+        this.carteAlCentro = CarteAlCentro();
+        this.turnoG1=true;
+    }
+
+    public ArrayList<Boolean> CarteAlCentro() {
+        // Creazione di un oggetto Random per generare valori casuali
+        Random random = new Random();
+
+        // Generazione di un numero casuale compreso tra 2 e 6 per la dimensione dell'ArrayList
+        int dimensione = random.nextInt(5) + 2; // Genera un numero tra 2 e 6 inclusi
+
+        // Creazione dell'ArrayList di booleani con dimensione casuale
+        ArrayList<Boolean> booleanList = new ArrayList<>();
+
+        // Aggiunta di valori booleani casuali all'ArrayList
+        for (int i = 0; i < dimensione; i++) {
+            boolean valore = random.nextBoolean();
+            booleanList.add(valore);
+        }
+
+        // Stampa dell'ArrayList di booleani
+        System.out.println("ArrayList di booleani:");
+        for (int i = 0; i < booleanList.size(); i++) {
+            System.out.println("Elemento " + i + ": " + booleanList.get(i));
+
+        }
+        return booleanList;
     }
 
     private String generaCodicePartita() {
@@ -50,6 +81,8 @@ public class Partita {
         partitaJson.put("sfidanti", this.sfidanti);
         partitaJson.put("viteGiocatore1", this.viteGiocatore1);
         partitaJson.put("viteGiocatore2", this.viteGiocatore2);
+        partitaJson.put("carteAlCentro", this.carteAlCentro);
+        partitaJson.put("turnoG1", this.turnoG1);
 
         // Leggi il contenuto attuale del file JSON
         JSONArray partiteJson = leggiPartite();

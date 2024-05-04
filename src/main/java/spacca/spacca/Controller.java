@@ -9,6 +9,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -279,6 +280,15 @@ public class Controller {
     @FXML
     private FlowPane spawnCarte;
 
+    @FXML
+    private Button gCAutoG1;
+    @FXML
+    private Button gCNemG1;
+    @FXML
+    private Button gCAutoG2;
+    @FXML
+    private Button gCNemG2;
+
 
     @FXML
     private void entraInGioco(ActionEvent event) throws IOException {
@@ -300,6 +310,7 @@ public class Controller {
                 campoDiGiocoController.caricaNomiGiocatori();
                 campoDiGiocoController.visualizzaNumeroVite(codicePartitaInserito);
                 campoDiGiocoController.visualizzaCarteAlCentro();
+                campoDiGiocoController.visualizzaBottoni(codicePartitaInserito);
 
                 Scene scene = new Scene(root);
                 Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
@@ -364,53 +375,28 @@ public class Controller {
         }
     }
 
-    @FXML
-    private void rimuoviVitaG1() {
-        System.out.println(codicePartitaInserito);
-        String filePath = "src/main/resources/spacca/spacca/partite.json";
-
+    private void rimuoviVitaG1(JSONArray partite, JSONObject partitaCorrente) {
         try {
-            // Leggi il file JSON e ottieni l'oggetto JSON della partita in corso
-            JSONParser parser = new JSONParser();
-            JSONArray partite = (JSONArray) parser.parse(new FileReader(filePath));
-            JSONObject partitaCorrente = null;
+            int viteGiocatore1 = ((Long) partitaCorrente.get("viteGiocatore1")).intValue();
+            if (viteGiocatore1 > 1) {
+                viteGiocatore1--;
+                partitaCorrente.put("viteGiocatore1", viteGiocatore1);
 
-            for (Object obj : partite) {
-                JSONObject partita = (JSONObject) obj;
-                String codice = (String) partita.get("codice");
-                if (codice != null && codice.equals(codicePartitaInserito)) {
-                    partitaCorrente = partita;
-                    break;
-                }
-            }
-
-            if (partitaCorrente != null) {
-                // Incrementa il valore delle vite del giocatore 1
-                int viteGiocatore1 = ((Long) partitaCorrente.get("viteGiocatore1")).intValue();
-                if (viteGiocatore1 > 1) {
-                    viteGiocatore1--;
-                    partitaCorrente.put("viteGiocatore1", viteGiocatore1);
-
-                    // Scrivi le modifiche nel file JSON
-                    try (FileWriter fileWriter = new FileWriter(filePath)) {
-                        fileWriter.write(partite.toJSONString());
-                        System.out.println("Vita rimossa al giocatore 1 con successo");
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-
-                    // Rimuovi un'immagine del cuore della view
-                    rimuoviImmagineCuore1();
+                // Cerca l'indice della partita corrente nell'array di partite
+                int index = partite.indexOf(partitaCorrente);
+                if (index != -1) {
+                    // Aggiorna la partita corrente nell'array di partite
+                    partite.set(index, partitaCorrente);
+                } else {
+                    System.out.println("Errore: Partita non trovata nell'array.");
                 }
 
-            } else {
-                System.out.println("Partita non trovata.");
+                // Rimuovi un'immagine del cuore della view
+                rimuoviImmagineCuore1();
             }
-
-        } catch (IOException | ParseException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
-
     }
 
     @FXML
@@ -461,54 +447,30 @@ public class Controller {
         }
     }
 
-    @FXML
-    private void rimuoviVitaG2() {
-        System.out.println(codicePartitaInserito);
-        String filePath = "src/main/resources/spacca/spacca/partite.json";
-
+    private void rimuoviVitaG2(JSONArray partite, JSONObject partitaCorrente) {
         try {
-            // Leggi il file JSON e ottieni l'oggetto JSON della partita in corso
-            JSONParser parser = new JSONParser();
-            JSONArray partite = (JSONArray) parser.parse(new FileReader(filePath));
-            JSONObject partitaCorrente = null;
+            int viteGiocatore2 = ((Long) partitaCorrente.get("viteGiocatore2")).intValue();
+            if (viteGiocatore2 > 1) {
+                viteGiocatore2--;
+                partitaCorrente.put("viteGiocatore2", viteGiocatore2);
 
-            for (Object obj : partite) {
-                JSONObject partita = (JSONObject) obj;
-                String codice = (String) partita.get("codice");
-                if (codice != null && codice.equals(codicePartitaInserito)) {
-                    partitaCorrente = partita;
-                    break;
-                }
-            }
-
-            if (partitaCorrente != null) {
-                // Incrementa il valore delle vite del giocatore 1
-                int viteGiocatore2 = ((Long) partitaCorrente.get("viteGiocatore2")).intValue();
-                if (viteGiocatore2 > 1) {
-                    viteGiocatore2--;
-                    partitaCorrente.put("viteGiocatore2", viteGiocatore2);
-
-                    // Scrivi le modifiche nel file JSON
-                    try (FileWriter fileWriter = new FileWriter(filePath)) {
-                        fileWriter.write(partite.toJSONString());
-                        System.out.println("Vita rimossa al giocatore 2 con successo");
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-
-                    // Rimuovi un'immagine del cuore della view
-                    rimuoviImmagineCuore2();
+                // Cerca l'indice della partita corrente nell'array di partite
+                int index = partite.indexOf(partitaCorrente);
+                if (index != -1) {
+                    // Aggiorna la partita corrente nell'array di partite
+                    partite.set(index, partitaCorrente);
+                } else {
+                    System.out.println("Errore: Partita non trovata nell'array.");
                 }
 
-            } else {
-                System.out.println("Partita non trovata.");
+                // Rimuovi un'immagine del cuore della view
+                rimuoviImmagineCuore2();
             }
-
-        } catch (IOException | ParseException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
-
     }
+
 
     private void rimuoviImmagineCuore1() {
         // Rimuovi l'ultima ImageView aggiunta da FlowPaneViteG1
@@ -735,6 +697,374 @@ public class Controller {
             flowPaneViteG2.getChildren().add(imageView);
         }
     }
+
+    public void visualizzaCarteAlCentro() {
+        JSONParser parser = new JSONParser();
+
+        try {
+            JSONArray booleanList = (JSONArray) parser.parse(getArrayCarteAlCentroFromPartita(codicePartitaInserito).toString());
+
+            Collections.shuffle(booleanList);
+
+            spawnCarte.getChildren().clear();
+            for (int i = 0; i < booleanList.size(); i++) {
+                boolean isTrue = (boolean) booleanList.get(i);
+
+                // Dimensioni desiderate per le immagini
+                double width = 48; // Larghezza desiderata
+                double height = 69; // Altezza desiderata
+
+                String imageUrl = isTrue ? "/spacca/spacca/images/dorso.png" : "/spacca/spacca/images/dorso2.png";
+
+                ImageView imageView = new ImageView(getClass().getResource(imageUrl).toExternalForm());
+                imageView.setFitWidth(width);
+                imageView.setFitHeight(height);
+                spawnCarte.getChildren().add(imageView);
+            }
+
+            // Aggiungi un ritardo di 10 secondi dopo l'esecuzione del for
+            Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(10), event -> {
+                // Codice da eseguire dopo il ritardo di 10 secondi
+
+                spawnCarte.getChildren().clear();
+
+                for (int i = 0; i < booleanList.size(); i++) {
+                    // Dimensioni desiderate per le immagini
+                    double width = 48; // Larghezza desiderata
+                    double height = 69; // Altezza desiderata
+
+                    ImageView imageView = new ImageView(getClass().getResource("/spacca/spacca/images/j.jpg").toExternalForm());
+                    imageView.setFitWidth(width);
+                    imageView.setFitHeight(height);
+                    spawnCarte.getChildren().add(imageView);
+                }
+
+                //Collections.shuffle(booleanList);
+
+                // Stampa dell'ArrayList di booleani
+                System.out.println("ArrayList di booleani mischiato:");
+                for (int i = 0; i < booleanList.size(); i++) {
+                    System.out.println("Elemento " + i + ": " + booleanList.get(i));
+                }
+
+            }));
+
+            timeline.play();
+
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @FXML
+    private void visualizzaBottoni(String codicePartitaInserito) {
+        String filePath = "src/main/resources/spacca/spacca/partite.json";
+
+        try {
+            // Leggi il contenuto attuale del file JSON
+            JSONParser parser = new JSONParser();
+            JSONArray partite = (JSONArray) parser.parse(new FileReader(filePath));
+
+            // Cerca la partita corrispondente al codice inserito
+            JSONObject partitaCorrispondente = null;
+            for (Object partitaObj : partite) {
+                JSONObject partita = (JSONObject) partitaObj;
+                String codicePartita = (String) partita.get("codice");
+                if (codicePartita.equals(codicePartitaInserito)) {
+                    partitaCorrispondente = partita;
+                    break;
+                }
+            }
+
+            if (partitaCorrispondente != null) {
+                boolean turnoG1 = (boolean) partitaCorrispondente.get("turnoG1");
+
+                // Visualizza i bottoni in base al turno corrente
+                if (turnoG1) {
+                    gCAutoG1.setVisible(true);
+                    gCNemG1.setVisible(true);
+                    gCAutoG2.setVisible(false);
+                    gCNemG2.setVisible(false);
+                } else {
+                    gCAutoG1.setVisible(false);
+                    gCNemG1.setVisible(false);
+                    gCAutoG2.setVisible(true);
+                    gCNemG2.setVisible(true);
+                }
+            } else {
+                // Gestisci il caso in cui non viene trovata nessuna partita corrispondente al codice inserito
+                System.out.println("Partita non trovata.");
+            }
+        } catch (ParseException | IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+//    @FXML
+//    private void usaCartaSulNemicoG1(ActionEvent event) throws IOException {
+//        //viene preso il valore di booleanList (NON mescolato)
+//        JSONParser parser = new JSONParser();
+//        try {
+//            JSONArray booleanList = (JSONArray) parser.parse(getArrayCarteAlCentroFromPartita(codicePartitaInserito).toString());
+//            //viene verificato il valore del primo elemento di booleanList
+//            boolean isFirstElementTrue = (boolean) booleanList.get(0);
+//            //a prescindere che il primo elemento sia true o false esso viene mostrato per qualche secondo l'elemento di boolean list
+//            if(isFirstElementTrue){
+//                //se l'elemento è true: rimuovi una vita a G2 poi richiama visualizzaBottoni
+//                rimuoviVitaG2();
+//            }
+//            //viene rimosso dalla lista e viene aggiornato l'aray di boolean nel json
+//
+//            //se l'elemento è false: richiama visualizzaBottoni
+//
+//        }
+//        catch (ParseException e) {
+//            e.printStackTrace();
+//        }
+//
+//    }
+
+    @FXML
+    private void usaCartaSulNemicoG1(ActionEvent event) throws IOException {
+        String filePath = "src/main/resources/spacca/spacca/partite.json";
+
+        try {
+            // Leggi il contenuto attuale del file JSON
+            JSONParser parser = new JSONParser();
+            JSONArray partite = (JSONArray) parser.parse(new FileReader(filePath));
+
+            // Cerca la partita corrispondente al codice inserito
+            JSONObject partitaCorrispondente = null;
+            for (Object partitaObj : partite) {
+                JSONObject partita = (JSONObject) partitaObj;
+                String codicePartita = (String) partita.get("codice");
+                if (codicePartita.equals(codicePartitaInserito)) {
+                    partitaCorrispondente = partita;
+                    break;
+                }
+            }
+
+            if (partitaCorrispondente != null) {
+                // Estrai l'array "carteAlCentro" dalla partita corrispondente
+                JSONArray booleanList = (JSONArray) partitaCorrispondente.get("carteAlCentro");
+
+                // Verifica se il primo valore di booleanList è true
+                if (!booleanList.isEmpty() && (boolean) booleanList.get(0)) {
+                    // Se il primo valore è true, richiama il metodo rimuoviVitaG2
+                    rimuoviVitaG2(partite, partitaCorrispondente);
+                }
+
+                // Rimuovi il primo elemento da booleanList
+                if (!booleanList.isEmpty()) {
+                    booleanList.remove(0);
+                }
+
+
+                boolean turnoG1 = false;
+                partitaCorrispondente.put("turnoG1", turnoG1);
+
+
+
+                // Scrivi le modifiche nel file JSON
+                try (FileWriter file = new FileWriter(filePath)) {
+                    file.write(partite.toJSONString());
+                }
+                visualizzaBottoni(codicePartitaInserito);
+                visualizzaCarteAlCentro();
+            } else {
+                // Gestisci il caso in cui non viene trovata nessuna partita corrispondente al codice inserito
+                System.out.println("Partita non trovata.");
+            }
+        } catch (ParseException | IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @FXML
+    private void usaCartaSuDiTeG1(ActionEvent event) throws IOException {
+        String filePath = "src/main/resources/spacca/spacca/partite.json";
+
+        try {
+            // Leggi il contenuto attuale del file JSON
+            JSONParser parser = new JSONParser();
+            JSONArray partite = (JSONArray) parser.parse(new FileReader(filePath));
+
+            // Cerca la partita corrispondente al codice inserito
+            JSONObject partitaCorrispondente = null;
+            for (Object partitaObj : partite) {
+                JSONObject partita = (JSONObject) partitaObj;
+                String codicePartita = (String) partita.get("codice");
+                if (codicePartita.equals(codicePartitaInserito)) {
+                    partitaCorrispondente = partita;
+                    break;
+                }
+            }
+
+            if (partitaCorrispondente != null) {
+                // Estrai l'array "carteAlCentro" dalla partita corrispondente
+                JSONArray booleanList = (JSONArray) partitaCorrispondente.get("carteAlCentro");
+
+                // Verifica se il primo valore di booleanList è true
+                if (!booleanList.isEmpty() && (boolean) booleanList.get(0)) {
+                    // Se il primo valore è true, richiama il metodo rimuoviVitaG2
+                    rimuoviVitaG1(partite, partitaCorrispondente);
+                    boolean turnoG1 = false;
+                    partitaCorrispondente.put("turnoG1", turnoG1);
+                }
+
+                // Rimuovi il primo elemento da booleanList
+                if (!booleanList.isEmpty()) {
+                    booleanList.remove(0);
+                }
+
+                // Scrivi le modifiche nel file JSON
+                try (FileWriter file = new FileWriter(filePath)) {
+                    file.write(partite.toJSONString());
+                }
+                visualizzaBottoni(codicePartitaInserito);
+                visualizzaCarteAlCentro();
+            } else {
+                // Gestisci il caso in cui non viene trovata nessuna partita corrispondente al codice inserito
+                System.out.println("Partita non trovata.");
+            }
+        } catch (ParseException | IOException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    @FXML
+    private void usaCartaSulNemicoG2(ActionEvent event) throws IOException {
+        String filePath = "src/main/resources/spacca/spacca/partite.json";
+
+        try {
+            // Leggi il contenuto attuale del file JSON
+            JSONParser parser = new JSONParser();
+            JSONArray partite = (JSONArray) parser.parse(new FileReader(filePath));
+
+            // Cerca la partita corrispondente al codice inserito
+            JSONObject partitaCorrispondente = null;
+            for (Object partitaObj : partite) {
+                JSONObject partita = (JSONObject) partitaObj;
+                String codicePartita = (String) partita.get("codice");
+                if (codicePartita.equals(codicePartitaInserito)) {
+                    partitaCorrispondente = partita;
+                    break;
+                }
+            }
+
+            if (partitaCorrispondente != null) {
+                // Estrai l'array "carteAlCentro" dalla partita corrispondente
+                JSONArray booleanList = (JSONArray) partitaCorrispondente.get("carteAlCentro");
+
+                // Verifica se il primo valore di booleanList è true
+                if (!booleanList.isEmpty() && (boolean) booleanList.get(0)) {
+                    // Se il primo valore è true, richiama il metodo rimuoviVitaG2
+                    rimuoviVitaG1(partite, partitaCorrispondente);
+                }
+
+                // Rimuovi il primo elemento da booleanList
+                if (!booleanList.isEmpty()) {
+                    booleanList.remove(0);
+                }
+
+
+                boolean turnoG1 = true;
+                partitaCorrispondente.put("turnoG1", turnoG1);
+
+
+
+                // Scrivi le modifiche nel file JSON
+                try (FileWriter file = new FileWriter(filePath)) {
+                    file.write(partite.toJSONString());
+                }
+                visualizzaBottoni(codicePartitaInserito);
+                visualizzaCarteAlCentro();
+            } else {
+                // Gestisci il caso in cui non viene trovata nessuna partita corrispondente al codice inserito
+                System.out.println("Partita non trovata.");
+            }
+        } catch (ParseException | IOException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    @FXML
+    private void usaCartaSuDiTeG2(ActionEvent event) throws IOException {
+        String filePath = "src/main/resources/spacca/spacca/partite.json";
+
+        try {
+            // Leggi il contenuto attuale del file JSON
+            JSONParser parser = new JSONParser();
+            JSONArray partite = (JSONArray) parser.parse(new FileReader(filePath));
+
+            // Cerca la partita corrispondente al codice inserito
+            JSONObject partitaCorrispondente = null;
+            for (Object partitaObj : partite) {
+                JSONObject partita = (JSONObject) partitaObj;
+                String codicePartita = (String) partita.get("codice");
+                if (codicePartita.equals(codicePartitaInserito)) {
+                    partitaCorrispondente = partita;
+                    break;
+                }
+            }
+
+            if (partitaCorrispondente != null) {
+                // Estrai l'array "carteAlCentro" dalla partita corrispondente
+                JSONArray booleanList = (JSONArray) partitaCorrispondente.get("carteAlCentro");
+
+                // Verifica se il primo valore di booleanList è true
+                if (!booleanList.isEmpty() && (boolean) booleanList.get(0)) {
+                    // Se il primo valore è true, richiama il metodo rimuoviVitaG2
+                    rimuoviVitaG2(partite, partitaCorrispondente);
+                    boolean turnoG1 = true;
+                    partitaCorrispondente.put("turnoG1", turnoG1);
+                }
+
+                // Rimuovi il primo elemento da booleanList
+                if (!booleanList.isEmpty()) {
+                    booleanList.remove(0);
+                }
+
+                // Scrivi le modifiche nel file JSON
+                try (FileWriter file = new FileWriter(filePath)) {
+                    file.write(partite.toJSONString());
+                }
+                visualizzaBottoni(codicePartitaInserito);
+                visualizzaCarteAlCentro();
+            } else {
+                // Gestisci il caso in cui non viene trovata nessuna partita corrispondente al codice inserito
+                System.out.println("Partita non trovata.");
+            }
+        } catch (ParseException | IOException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    private JSONArray getArrayCarteAlCentroFromPartita(String codicePartita) {
+        JSONParser parser = new JSONParser();
+        try (FileReader reader = new FileReader("src/main/resources/spacca/spacca/partite.json")) {
+            // Parsa il file JSON delle partite come un array JSON
+            JSONArray partite = (JSONArray) parser.parse(reader);
+
+            // Itera attraverso le partite nel file JSON
+            for (Object partitaObj : partite) {
+                JSONObject partita = (JSONObject) partitaObj;
+                // Controlla se il codice della partita fornito corrisponde a quello nel JSON
+                String codicePartitaJSON = (String) partita.get("codice");
+                if (codicePartita.equals(codicePartitaJSON)) {
+                    // Restituisci l'array di carteAlCentro
+                    return (JSONArray) partita.get("carteAlCentro");
+                }
+            }
+        } catch (IOException | ParseException e) {
+            e.printStackTrace();
+        }
+        return null; // In caso di eccezione o se il codice non corrisponde, restituisce null
+    }
+
     // codice crea da tes come prova
 
     /* Campi del backend */
@@ -789,7 +1119,7 @@ public class Controller {
         buttonDealHand.setDisable(true); // Disabilita il bottone per distribuire la mano dopo l'uso
         buttonCheckHand.setDisable(false); // Abilita il bottone per controllare la mano
 */
-        /* Mostra le carte */
+    /* Mostra le carte */
     /*
         String cardUrl1 = URL_BASE_CARTE + mano.getMano().get(0).getUrlString();
         String cardUrl2 = URL_BASE_CARTE + mano.getMano().get(1).getUrlString();
@@ -833,64 +1163,6 @@ public class Controller {
         alert.showAndWait();
     }*/
 
-
-    public void visualizzaCarteAlCentro() {
-        CarteAlCentro carteAlCentro = new CarteAlCentro();
-        ArrayList<Boolean> booleanList = carteAlCentro.CarteAlCentro();
-
-        for (int i = 0; i < booleanList.size(); i++) {
-            if(booleanList.get(i)) {
-                // Dimensioni desiderate per le immagini
-                double width = 48; // Larghezza desiderata
-                double height = 69; // Altezza desiderata
-
-                ImageView imageView = new ImageView(getClass().getResource("/spacca/spacca/images/dorso.png").toExternalForm());
-                imageView.setFitWidth(width);
-                imageView.setFitHeight(height);
-                spawnCarte.getChildren().add(imageView);
-            } else {
-                // Dimensioni desiderate per le immagini
-                double width = 48; // Larghezza desiderata
-                double height = 69; // Altezza desiderata
-
-                ImageView imageView = new ImageView(getClass().getResource("/spacca/spacca/images/dorso2.png").toExternalForm());
-                imageView.setFitWidth(width);
-                imageView.setFitHeight(height);
-                spawnCarte.getChildren().add(imageView);
-            }
-        }
-
-        // Aggiungi un ritardo di 5 secondi dopo l'esecuzione del for
-        Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(10), event -> {
-            // Codice da eseguire dopo il ritardo di 5 secondi
-            // Puoi inserire qui le istruzioni che desideri ritardare
-            // Ad esempio, puoi aggiungere altre immagini o eseguire altre operazioni
-            spawnCarte.getChildren().clear();
-            for (int i = 0; i < booleanList.size(); i++) {
-
-                // Dimensioni desiderate per le immagini
-                double width = 48; // Larghezza desiderata
-                double height = 69; // Altezza desiderata
-
-                ImageView imageView = new ImageView(getClass().getResource("/spacca/spacca/images/j.jpg").toExternalForm());
-                imageView.setFitWidth(width);
-                imageView.setFitHeight(height);
-                spawnCarte.getChildren().add(imageView);
-            }
-
-            Collections.shuffle(booleanList);
-            // Stampa dell'ArrayList di booleani
-            System.out.println("ArrayList di booleani mischiato:");
-            for (int i = 0; i < booleanList.size(); i++) {
-                System.out.println("Elemento " + i + ": " + booleanList.get(i));
-
-            }
-
-        }));
-        timeline.play();
-
-    }
-
 //    private boolean verificaCodicePartita(String codiceInserito) {
 //        JSONParser parser = new JSONParser();
 //        try (FileReader reader = new FileReader("src/main/resources/spacca/spacca/partite.json")) {
@@ -906,7 +1178,8 @@ public class Controller {
 //            e.printStackTrace();
 //        }
 //        return false;
+
 //    }
 
-
 }
+
