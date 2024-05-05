@@ -311,6 +311,7 @@ public class Controller {
                 campoDiGiocoController.visualizzaNumeroVite(codicePartitaInserito);
                 campoDiGiocoController.visualizzaCarteAlCentro();
                 campoDiGiocoController.visualizzaBottoni(codicePartitaInserito);
+                //campoDiGiocoController.visualizzaCarteAlCentroNascoste();
 
                 Scene scene = new Scene(root);
                 Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
@@ -756,6 +757,78 @@ public class Controller {
         }
     }
 
+    public void visualizzaCarteAlCentroNascoste(JSONArray booleanList) {
+
+                spawnCarte.getChildren().clear();
+
+                    for (int i = 0; i < booleanList.size(); i++) {
+                        // Dimensioni desiderate per le immagini
+                        double width = 48; // Larghezza desiderata
+                        double height = 69; // Altezza desiderata
+
+                        ImageView imageView = new ImageView(getClass().getResource("/spacca/spacca/images/j.jpg").toExternalForm());
+                        imageView.setFitWidth(width);
+                        imageView.setFitHeight(height);
+                        spawnCarte.getChildren().add(imageView);
+                    }
+
+                // Stampa dell'ArrayList di booleani
+                System.out.println("ArrayList di booleani:");
+                for (int i = 0; i < booleanList.size(); i++) {
+                    System.out.println("Elemento " + i + ": " + booleanList.get(i));
+                }
+
+    }
+
+    public void visualizzaCarteAlCentroNonDaJson(JSONArray booleanList) {
+
+            Collections.shuffle(booleanList);
+
+            spawnCarte.getChildren().clear();
+            for (int i = 0; i < booleanList.size(); i++) {
+                boolean isTrue = (boolean) booleanList.get(i);
+
+                // Dimensioni desiderate per le immagini
+                double width = 48; // Larghezza desiderata
+                double height = 69; // Altezza desiderata
+
+                String imageUrl = isTrue ? "/spacca/spacca/images/dorso.png" : "/spacca/spacca/images/dorso2.png";
+
+                ImageView imageView = new ImageView(getClass().getResource(imageUrl).toExternalForm());
+                imageView.setFitWidth(width);
+                imageView.setFitHeight(height);
+                spawnCarte.getChildren().add(imageView);
+            }
+
+            // Aggiungi un ritardo di 10 secondi dopo l'esecuzione del for
+            Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(5), event -> {
+                // Codice da eseguire dopo il ritardo di 10 secondi
+
+                spawnCarte.getChildren().clear();
+
+                for (int i = 0; i < booleanList.size(); i++) {
+                    // Dimensioni desiderate per le immagini
+                    double width = 48; // Larghezza desiderata
+                    double height = 69; // Altezza desiderata
+
+                    ImageView imageView = new ImageView(getClass().getResource("/spacca/spacca/images/j.jpg").toExternalForm());
+                    imageView.setFitWidth(width);
+                    imageView.setFitHeight(height);
+                    spawnCarte.getChildren().add(imageView);
+                }
+
+                // Stampa dell'ArrayList di booleani
+                System.out.println("ArrayList di booleani mischiato:");
+                for (int i = 0; i < booleanList.size(); i++) {
+                    System.out.println("Elemento " + i + ": " + booleanList.get(i));
+                }
+
+            }));
+
+            timeline.play();
+
+    }
+
     @FXML
     private void visualizzaBottoni(String codicePartitaInserito) {
         String filePath = "src/main/resources/spacca/spacca/partite.json";
@@ -857,6 +930,12 @@ public class Controller {
                 // Rimuovi il primo elemento da booleanList
                 if (!booleanList.isEmpty()) {
                     booleanList.remove(0);
+                    visualizzaCarteAlCentroNascoste(booleanList);
+                }
+
+                if (booleanList.isEmpty()) {
+                    booleanList.addAll(new Partita().CarteAlCentro());
+                    visualizzaCarteAlCentroNonDaJson(booleanList);
                 }
 
 
@@ -870,7 +949,7 @@ public class Controller {
                     file.write(partite.toJSONString());
                 }
                 visualizzaBottoni(codicePartitaInserito);
-                visualizzaCarteAlCentro();
+
             } else {
                 // Gestisci il caso in cui non viene trovata nessuna partita corrispondente al codice inserito
                 System.out.println("Partita non trovata.");
@@ -915,6 +994,12 @@ public class Controller {
                 // Rimuovi il primo elemento da booleanList
                 if (!booleanList.isEmpty()) {
                     booleanList.remove(0);
+                    visualizzaCarteAlCentroNascoste(booleanList);
+                }
+
+                if (booleanList.isEmpty()) {
+                    booleanList.addAll(new Partita().CarteAlCentro());
+                    visualizzaCarteAlCentroNonDaJson(booleanList);
                 }
 
                 // Scrivi le modifiche nel file JSON
@@ -922,7 +1007,7 @@ public class Controller {
                     file.write(partite.toJSONString());
                 }
                 visualizzaBottoni(codicePartitaInserito);
-                visualizzaCarteAlCentro();
+
             } else {
                 // Gestisci il caso in cui non viene trovata nessuna partita corrispondente al codice inserito
                 System.out.println("Partita non trovata.");
@@ -966,6 +1051,12 @@ public class Controller {
                 // Rimuovi il primo elemento da booleanList
                 if (!booleanList.isEmpty()) {
                     booleanList.remove(0);
+                    visualizzaCarteAlCentroNascoste(booleanList);
+                }
+
+                if (booleanList.isEmpty()) {
+                    booleanList.addAll(new Partita().CarteAlCentro());
+                    visualizzaCarteAlCentroNonDaJson(booleanList);
                 }
 
 
@@ -979,7 +1070,9 @@ public class Controller {
                     file.write(partite.toJSONString());
                 }
                 visualizzaBottoni(codicePartitaInserito);
-                visualizzaCarteAlCentro();
+
+
+
             } else {
                 // Gestisci il caso in cui non viene trovata nessuna partita corrispondente al codice inserito
                 System.out.println("Partita non trovata.");
@@ -1025,6 +1118,12 @@ public class Controller {
                 // Rimuovi il primo elemento da booleanList
                 if (!booleanList.isEmpty()) {
                     booleanList.remove(0);
+                    visualizzaCarteAlCentroNascoste(booleanList);
+                }
+
+                if (booleanList.isEmpty()) {
+                    booleanList.addAll(new Partita().CarteAlCentro());
+                    visualizzaCarteAlCentroNonDaJson(booleanList);
                 }
 
                 // Scrivi le modifiche nel file JSON
@@ -1032,7 +1131,7 @@ public class Controller {
                     file.write(partite.toJSONString());
                 }
                 visualizzaBottoni(codicePartitaInserito);
-                visualizzaCarteAlCentro();
+
             } else {
                 // Gestisci il caso in cui non viene trovata nessuna partita corrispondente al codice inserito
                 System.out.println("Partita non trovata.");
