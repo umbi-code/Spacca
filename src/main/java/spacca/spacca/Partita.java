@@ -19,6 +19,9 @@ public class Partita {
     private int viteGiocatore2;
     private List<Boolean> carteAlCentro;
     private boolean turnoG1;
+    private ArrayList<String> manoG1;
+    private ArrayList<String> manoG2;
+
 
 
 
@@ -30,6 +33,8 @@ public class Partita {
         this.viteGiocatore2 = 3;
         this.carteAlCentro = CarteAlCentro();
         this.turnoG1=true;
+        this.manoG1=generaMazzo();
+        this.manoG2=generaMazzo();
     }
 
     public ArrayList<Boolean> CarteAlCentro() {
@@ -56,6 +61,63 @@ public class Partita {
         }
         return booleanList;
     }
+    public ArrayList<String> generaMazzo() {
+        Random random = new Random();
+        ArrayList<String> mazzo = new ArrayList<>();
+        int dimensione = 2;
+
+        for (int i = 0; i < dimensione; i++) {
+            String nomeCarta = generaNomeCasuale(); // Genera un nome casuale per la carta
+            //String urlFacciaCarta = nomeCarta.toLowerCase() + ".png"; // URL per la faccia della carta (assumendo che il nome della carta corrisponda al nome del file immagine)
+            //Carta carta = new Carta(nomeCarta, urlFacciaCarta); // Crea un'istanza di Carta con il nome e l'URL
+            mazzo.add(nomeCarta); // Aggiunge la carta al mazzo
+        }
+
+        return mazzo;
+    }
+
+    public static String generaNomeCasuale() {
+        // Puoi implementare la logica per generare nomi casuali per le carte
+        // Ad esempio, puoi utilizzare un array di nomi predefiniti e selezionarne uno casualmente
+        // Oppure puoi generare un nome in base a qualche algoritmo
+        // Per il momento, restituiremo solo nomi di esempio
+
+        String[] nomi = {"Cura", "Congela"};
+        Random random = new Random();
+        int indice = random.nextInt(nomi.length);
+        return nomi[indice];
+    }
+
+//    public ArrayList<Carta> generaMazzo() {
+//
+//        Random random = new Random();
+//
+//        //Distribuisco inizialmente 3 carte al giocatore
+//        int dimensione = 3;
+//
+//        ArrayList<Carta> mazzo = new ArrayList<>();
+//
+//        for (int i = 0; i < dimensione; i++) {
+//            int n = random.nextInt(Carta.Tipo.values().length);
+//            String s = Carta.Tipo.getTipo(n).toString();
+//            mazzo.add(new Carta(s + ".png", Carta.Tipo.getTipo(n)));
+//        }
+//        return mazzo;
+//    }
+
+//    public ArrayList<Carta.Tipo> generaMazzo() {
+//        Random random = new Random();
+//        ArrayList<Carta.Tipo> mazzo = new ArrayList<>();
+//        int dimensione = 3; // Genera 3 carte
+//
+//        for (int i = 0; i < dimensione; i++) {
+//            int indiceTipo = random.nextInt(Carta.Tipo.values().length); // Genera un indice casuale per il tipo di carta
+//            Carta.Tipo tipo = Carta.Tipo.getTipo(indiceTipo); // Ottiene il tipo di carta corrispondente all'indice casuale
+//            mazzo.add(tipo); // Aggiunge il tipo di carta al mazzo
+//        }
+//
+//        return mazzo;
+//    }
 
     private String generaCodicePartita() {
         // Genera un codice partita casuale di lunghezza 5
@@ -83,6 +145,8 @@ public class Partita {
         partitaJson.put("viteGiocatore2", this.viteGiocatore2);
         partitaJson.put("carteAlCentro", this.carteAlCentro);
         partitaJson.put("turnoG1", this.turnoG1);
+        partitaJson.put("manoG1", this.manoG1);
+        partitaJson.put("manoG2", this.manoG2);
 
         // Leggi il contenuto attuale del file JSON
         JSONArray partiteJson = leggiPartite();
