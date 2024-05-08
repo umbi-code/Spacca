@@ -37,7 +37,7 @@ public class Partita {
         this.manoG2=generaMazzo();
     }
 
-    public ArrayList<Boolean> CarteAlCentro() {
+    public static ArrayList<Boolean> CarteAlCentro() {
         // Creazione di un oggetto Random per generare valori casuali
         Random random = new Random();
 

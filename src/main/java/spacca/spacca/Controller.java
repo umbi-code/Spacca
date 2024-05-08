@@ -1322,6 +1322,18 @@ public class Controller {
                     case "Congela":
                         imageUrl = "/spacca/spacca/images/Congela.png";
                         break;
+                    case "ScambioMano":
+                        imageUrl = "/spacca/spacca/images/ScambioMano.png";
+                        break;
+                    case "Scarta":
+                        imageUrl = "/spacca/spacca/images/Scarta.png";
+                        break;
+                    case "Rigenera":
+                        imageUrl = "/spacca/spacca/images/Rigenera.png";
+                        break;
+                    case "DoppioDanno":
+                        imageUrl = "/spacca/spacca/images/DoppioDanno.png";
+                        break;
                 }
                 // Dimensioni desiderate per le immagini
                 double width = 58; // Larghezza desiderata
@@ -1352,14 +1364,7 @@ public class Controller {
         //GIOCATORE 2
         if (!turno) {
 
-            switch (nomeCarta) {
-                case "Cura":
-                    aggiungiVitaG2();
-                    break;
-                case "Congela":
-                    //bloccaturno();
-                    break;
-            }
+
 
             JSONArray manoG2 = getArrayManoG2(codicePartitaInserito);
             // Il counter in questo for serve per rimuovere solo un elemento che ha quel nome dall'array mano
@@ -1395,6 +1400,7 @@ public class Controller {
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
+                    switchCarte(nomeCarta);
                     visualizzaMani();
                 } else {
                     System.out.println("Partita non trovata.");
@@ -1406,14 +1412,7 @@ public class Controller {
 
         } else {
             //GIOCATORE 1
-            switch (nomeCarta) {
-                case "Cura":
-                    aggiungiVitaG1();
-                    break;
-                case "Congela":
-                    //bloccaturno();
-                    break;
-            }
+
 
             JSONArray manoG1 = getArrayManoG1(codicePartitaInserito);
             // Il counter in questo for serve per rimuovere solo un elemento che ha quel nome dall'array mano
@@ -1424,6 +1423,7 @@ public class Controller {
                     counter++;
                 }
             }
+
 
             try {
                 // Leggi il file JSON e ottieni l'oggetto JSON della partita in corso
@@ -1459,6 +1459,29 @@ public class Controller {
             }
         }
 
+    }
+
+    private void switchCarte(String nomeCarta) {
+        switch (nomeCarta) {
+            case "Cura":
+                aggiungiVitaG1();
+                break;
+            case "Congela":
+                //bloccaturno();
+                break;
+            case "ScambioMano":
+                scambiaMani();
+                break;
+            case "Scarta":
+                scartaCartaAlCentro();
+                break;
+            case "Rigenera":
+                rigeneraCarteAlCentro();
+                break;
+            case "DoppioDanno":
+                doppioDanno();
+                break;
+        }
     }
 
 
@@ -1552,7 +1575,141 @@ public class Controller {
         visualizzaBottoni(codicePartitaInserito);
     }
 
+    public void scambiaMani() {
+        //Prendi entrambi i mazzi e assrgnali alle variabili
+        JSONArray manoG1 = getArrayManoG1(codicePartitaInserito);
+        JSONArray manoG2 = getArrayManoG2(codicePartitaInserito);
 
+        try {
+            // Leggi il file JSON e ottieni l'oggetto JSON della partita in corso
+            JSONParser parser = new JSONParser();
+            JSONArray partite = (JSONArray) parser.parse(new FileReader("src/main/resources/spacca/spacca/partite.json"));
+            JSONObject partitaCorrente = null;
+
+            for (Object obj : partite) {
+                JSONObject partita = (JSONObject) obj;
+                String codice = (String) partita.get("codice");
+                if (codice != null && codice.equals(codicePartitaInserito)) {
+                    partitaCorrente = partita;
+                    break;
+                }
+            }
+
+            if (partitaCorrente != null) {
+                partitaCorrente.put("manoG1", manoG2);
+                partitaCorrente.put("manoG2", manoG1);
+
+                try (FileWriter fileWriter = new FileWriter("src/main/resources/spacca/spacca/partite.json")) {
+                    fileWriter.write(partite.toJSONString());
+                    System.out.println("Mano G1 aggiornata");
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                visualizzaMani();
+            } else {
+                System.out.println("Partita non trovata.");
+            }
+
+        } catch (IOException | ParseException e) {
+            e.printStackTrace();
+        }
+        //visualizzaBottoni(codicePartitaInserito);
+    }
+
+    public void scartaCartaAlCentro() {
+        try {
+            //Prendi l'array di carte al centro dal JSON e assegnalo ad una variabile
+            JSONParser parser = new JSONParser();
+            JSONArray booleanList = (JSONArray) parser.parse(getArrayCarteAlCentroFromPartita(codicePartitaInserito).toString());
+            //Aggiorna il valore togliendo il primo elemento
+            booleanList.remove(0);
+            //Aggiorna dati nel JSON
+            JSONArray partite = (JSONArray) parser.parse(new FileReader("src/main/resources/spacca/spacca/partite.json"));
+            JSONObject partitaCorrente = null;
+
+            for (Object obj : partite) {
+                JSONObject partita = (JSONObject) obj;
+                String codice = (String) partita.get("codice");
+                if (codice != null && codice.equals(codicePartitaInserito)) {
+                    partitaCorrente = partita;
+                    break;
+                }
+            }
+
+            if (partitaCorrente != null) {
+                partitaCorrente.put("carteAlCentro", booleanList);
+
+                try (FileWriter fileWriter = new FileWriter("src/main/resources/spacca/spacca/partite.json")) {
+                    fileWriter.write(partite.toJSONString());
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                //visualizzaMani();
+                visualizzaCarteAlCentroNascoste(booleanList);
+            } else {
+                System.out.println("Partita non trovata.");
+            }
+
+        } catch (IOException | ParseException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void rigeneraCarteAlCentro() {
+        try {
+            JSONParser parser = new JSONParser();
+            JSONArray booleanList = (JSONArray) parser.parse(Partita.CarteAlCentro().toString());
+            //Aggiorna dati nel JSON
+            JSONArray partite = (JSONArray) parser.parse(new FileReader("src/main/resources/spacca/spacca/partite.json"));
+            JSONObject partitaCorrente = null;
+
+            for (Object obj : partite) {
+                JSONObject partita = (JSONObject) obj;
+                String codice = (String) partita.get("codice");
+                if (codice != null && codice.equals(codicePartitaInserito)) {
+                    partitaCorrente = partita;
+                    break;
+                }
+            }
+
+            if (partitaCorrente != null) {
+                partitaCorrente.put("carteAlCentro", booleanList);
+
+                try (FileWriter fileWriter = new FileWriter("src/main/resources/spacca/spacca/partite.json")) {
+                    fileWriter.write(partite.toJSONString());
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                //visualizzaMani();
+                visualizzaCarteAlCentro();
+            } else {
+                System.out.println("Partita non trovata.");
+            }
+
+        } catch (IOException | ParseException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void doppioDanno(){
+        //Prendi il JSON di carte al centro
+        JSONArray booleanList = getArrayCarteAlCentroFromPartita(codicePartitaInserito);
+
+        //se l'elemento di indice 0 è true, allora rimuovi 2 vite a G2 e setta turno G1 su false, altrimenti nulla
+        if((boolean)booleanList.get(0)==true){
+
+
+
+        }
+
+        //richiamo visualizzaBottoni() per aggiornare la view dei pulsanti
+        visualizzaBottoni(codicePartitaInserito);
+
+    }
+
+    public void doppioDannoG2(){
+        //Prendi in input
+    }
 
     // codice crea da tes come prova
 
