@@ -25,6 +25,7 @@ import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
 import javax.swing.*;
+import java.awt.event.MouseEvent;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
@@ -43,7 +44,7 @@ public class Controller {
     @FXML
     private void gioca(ActionEvent event) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("login-view.fxml"));
-        Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         Scene scene = new Scene(root);
         stage.setScene(scene);
         stage.show();
@@ -58,7 +59,7 @@ public class Controller {
     @FXML
     private void toMenu(ActionEvent event) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("hello-view.fxml"));
-        Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         Scene scene = new Scene(root);
         stage.setScene(scene);
         stage.show();
@@ -67,15 +68,16 @@ public class Controller {
     @FXML
     private void loginPlayer(ActionEvent event) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("login_utente-view.fxml"));
-        Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         Scene scene = new Scene(root);
         stage.setScene(scene);
         stage.show();
     }
+
     @FXML
     private void loginAdmin(ActionEvent event) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("login_admin-view.fxml"));
-        Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         Scene scene = new Scene(root);
         stage.setScene(scene);
         stage.show();
@@ -159,8 +161,8 @@ public class Controller {
         boolean accessoConsentito = LoginManager.verificaCredenziali(username, password);
 
         if (accessoConsentito) {
-            System.out.println("Accesso effettuato come utente admin "+ username);
-            usernameUtenteLoggato=username;
+            System.out.println("Accesso effettuato come utente admin " + username);
+            usernameUtenteLoggato = username;
             // Carica la pagina crea_lobby_admin-view.fxml
             FXMLLoader loader = new FXMLLoader(getClass().getResource("crea_lobby_admin-view.fxml"));
             Parent root = loader.load();
@@ -191,7 +193,7 @@ public class Controller {
 
         if (accessoConsentito) {
             setUsernameUtenteLoggato(username);
-            System.out.println("Accesso effettuato come utente "+ username);
+            System.out.println("Accesso effettuato come utente " + username);
 
             FXMLLoader loader = new FXMLLoader(getClass().getResource("accesso_lobby_utente-view.fxml"));
             Parent root = loader.load();
@@ -317,6 +319,7 @@ public class Controller {
                 campoDiGiocoController.visualizzaCarteAlCentro();
                 campoDiGiocoController.visualizzaBottoni(codicePartitaInserito);
                 //campoDiGiocoController.visualizzaCarteAlCentroNascoste();
+                campoDiGiocoController.visualizzaMani();
 
                 Scene scene = new Scene(root);
                 Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
@@ -383,9 +386,11 @@ public class Controller {
 
     @FXML
     private Label vincitoreLabel;
+
     public void setVincitore(String vincitore) {
         vincitoreLabel.setText(vincitore);
     }
+
     private void rimuoviVitaG1(JSONArray partite, JSONObject partitaCorrente, ActionEvent event) {
         try {
             int viteGiocatore1 = ((Long) partitaCorrente.get("viteGiocatore1")).intValue();
@@ -405,13 +410,13 @@ public class Controller {
                 // Rimuovi un'immagine del cuore della view
                 rimuoviImmagineCuore1();
             }
-            if(viteGiocatore1==0) {
+            if (viteGiocatore1 == 0) {
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("vittoria_partita-view.fxml"));
                 Parent root = loader.load();
                 Controller vittoriaController = loader.getController();
                 JSONArray sfidantiPartita = getArraySfidantiFromPartita(codicePartitaInserito);
                 // Il vincitore è il giocatore 2
-                String vincitore= ((String) sfidantiPartita.get(1));
+                String vincitore = ((String) sfidantiPartita.get(1));
                 vittoriaController.setVincitore(vincitore);
                 Scene scene = new Scene(root);
                 Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
@@ -490,13 +495,13 @@ public class Controller {
                 // Rimuovi un'immagine del cuore della view
                 rimuoviImmagineCuore2();
             }
-            if(viteGiocatore2==0){
+            if (viteGiocatore2 == 0) {
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("vittoria_partita-view.fxml"));
                 Parent root = loader.load();
                 Controller vittoriaController = loader.getController();
                 JSONArray sfidantiPartita = getArraySfidantiFromPartita(codicePartitaInserito);
                 // Il vincitore è il giocatore 1
-                String vincitore= ((String) sfidantiPartita.get(0));
+                String vincitore = ((String) sfidantiPartita.get(0));
                 vittoriaController.setVincitore(vincitore);
                 Scene scene = new Scene(root);
                 Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
@@ -512,16 +517,16 @@ public class Controller {
     private void rimuoviImmagineCuore1() {
         // Rimuovi l'ultima ImageView aggiunta da FlowPaneViteG1
         ObservableList<Node> childrenG1 = flowPaneViteG1.getChildren();
-        if(!childrenG1.isEmpty()) {
-            childrenG1.remove(childrenG1.size()-1);
+        if (!childrenG1.isEmpty()) {
+            childrenG1.remove(childrenG1.size() - 1);
         }
     }
 
     private void rimuoviImmagineCuore2() {
         // Rimuovi l'ultima ImageView aggiunta da FlowPaneViteG1
         ObservableList<Node> childrenG2 = flowPaneViteG2.getChildren();
-        if(!childrenG2.isEmpty()) {
-            childrenG2.remove(childrenG2.size()-1);
+        if (!childrenG2.isEmpty()) {
+            childrenG2.remove(childrenG2.size() - 1);
         }
     }
 
@@ -591,7 +596,7 @@ public class Controller {
                     JSONArray sfidanti = (JSONArray) jsonObject.get("sfidanti");
 
                     //Utente non è in lista e la lista è vuota --> utente viene aggiunto, ma rimane in attesa
-                    if (!sfidanti.contains(nuovoSfidante) && sfidanti.size() == 0){
+                    if (!sfidanti.contains(nuovoSfidante) && sfidanti.size() == 0) {
                         sfidanti.add(nuovoSfidante);
 
                         // Salva le modifiche nel file JSON
@@ -605,7 +610,7 @@ public class Controller {
                         return "Attendi che un altro sfidante acceda alla partita";
                     }
                     //Utente non è in lista ma nella lista c'è già un giocatore --> utente viene aggiunto, partita avviata
-                    if (!sfidanti.contains(nuovoSfidante) && sfidanti.size() < 2){
+                    if (!sfidanti.contains(nuovoSfidante) && sfidanti.size() < 2) {
                         sfidanti.add(nuovoSfidante);
 
                         // Salva le modifiche nel file JSON
@@ -619,11 +624,11 @@ public class Controller {
                         return "successo";
                     }
                     //Utente è in lista e la lista ha solo lui --> utente non viene aggiunto, rimane in attesa
-                    if (sfidanti.contains(nuovoSfidante) && sfidanti.size() == 1){
+                    if (sfidanti.contains(nuovoSfidante) && sfidanti.size() == 1) {
                         return "Attendi che un altro sfidante acceda alla partita";
                     }
                     //Utente è in lista ma la lista è piena --> utente non viene aggiunto, partita avviata
-                    if (sfidanti.contains(nuovoSfidante) && sfidanti.size() == 2){
+                    if (sfidanti.contains(nuovoSfidante) && sfidanti.size() == 2) {
                         return "successo";
                     }
                 }
@@ -692,22 +697,22 @@ public class Controller {
 
 
     private int getNumeroViteGiocatore(String nomeChiave, String codicePartita) {
-    JSONParser parser = new JSONParser();
-    try (FileReader reader = new FileReader("src/main/resources/spacca/spacca/partite.json")) {
-        JSONArray partite = (JSONArray) parser.parse(reader);
-        for (Object partitaObj : partite) {
-            JSONObject partita = (JSONObject) partitaObj;
-            String codice = partita.get("codice").toString();
-            if (codice.equals(codicePartita) && partita.containsKey(nomeChiave)) {
-                System.out.println(((Long) partita.get(nomeChiave)).intValue());
-                return ((Long) partita.get(nomeChiave)).intValue();
+        JSONParser parser = new JSONParser();
+        try (FileReader reader = new FileReader("src/main/resources/spacca/spacca/partite.json")) {
+            JSONArray partite = (JSONArray) parser.parse(reader);
+            for (Object partitaObj : partite) {
+                JSONObject partita = (JSONObject) partitaObj;
+                String codice = partita.get("codice").toString();
+                if (codice.equals(codicePartita) && partita.containsKey(nomeChiave)) {
+                    System.out.println(((Long) partita.get(nomeChiave)).intValue());
+                    return ((Long) partita.get(nomeChiave)).intValue();
+                }
             }
+        } catch (IOException | ParseException e) {
+            e.printStackTrace();
         }
-    } catch (IOException | ParseException e) {
-        e.printStackTrace();
+        return 0; // Se non viene trovato il numero di vite nel JSON, restituisci 0
     }
-    return 0; // Se non viene trovato il numero di vite nel JSON, restituisci 0
-}
 
 
     public void visualizzaNumeroVite(int viteGiocatore1, int viteGiocatore2) {
@@ -795,73 +800,73 @@ public class Controller {
 
     public void visualizzaCarteAlCentroNascoste(JSONArray booleanList) {
 
-                spawnCarte.getChildren().clear();
+        spawnCarte.getChildren().clear();
 
-                    for (int i = 0; i < booleanList.size(); i++) {
-                        // Dimensioni desiderate per le immagini
-                        double width = 48; // Larghezza desiderata
-                        double height = 69; // Altezza desiderata
+        for (int i = 0; i < booleanList.size(); i++) {
+            // Dimensioni desiderate per le immagini
+            double width = 48; // Larghezza desiderata
+            double height = 69; // Altezza desiderata
 
-                        ImageView imageView = new ImageView(getClass().getResource("/spacca/spacca/images/j.jpg").toExternalForm());
-                        imageView.setFitWidth(width);
-                        imageView.setFitHeight(height);
-                        spawnCarte.getChildren().add(imageView);
-                    }
+            ImageView imageView = new ImageView(getClass().getResource("/spacca/spacca/images/j.jpg").toExternalForm());
+            imageView.setFitWidth(width);
+            imageView.setFitHeight(height);
+            spawnCarte.getChildren().add(imageView);
+        }
 
-                // Stampa dell'ArrayList di booleani
-                System.out.println("ArrayList di booleani:");
-                for (int i = 0; i < booleanList.size(); i++) {
-                    System.out.println("Elemento " + i + ": " + booleanList.get(i));
-                }
+        // Stampa dell'ArrayList di booleani
+        System.out.println("ArrayList di booleani:");
+        for (int i = 0; i < booleanList.size(); i++) {
+            System.out.println("Elemento " + i + ": " + booleanList.get(i));
+        }
 
     }
 
     public void visualizzaCarteAlCentroNonDaJson(JSONArray booleanList) {
 
-            Collections.shuffle(booleanList);
+        Collections.shuffle(booleanList);
+
+        spawnCarte.getChildren().clear();
+        for (int i = 0; i < booleanList.size(); i++) {
+            boolean isTrue = (boolean) booleanList.get(i);
+
+            // Dimensioni desiderate per le immagini
+            double width = 48; // Larghezza desiderata
+            double height = 69; // Altezza desiderata
+
+            String imageUrl = isTrue ? "/spacca/spacca/images/dorso.png" : "/spacca/spacca/images/dorso2.png";
+
+            ImageView imageView = new ImageView(getClass().getResource(imageUrl).toExternalForm());
+            imageView.setFitWidth(width);
+            imageView.setFitHeight(height);
+            spawnCarte.getChildren().add(imageView);
+        }
+
+        // Aggiungi un ritardo di 10 secondi dopo l'esecuzione del for
+        Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(5), event -> {
+            // Codice da eseguire dopo il ritardo di 10 secondi
 
             spawnCarte.getChildren().clear();
-            for (int i = 0; i < booleanList.size(); i++) {
-                boolean isTrue = (boolean) booleanList.get(i);
 
+            for (int i = 0; i < booleanList.size(); i++) {
                 // Dimensioni desiderate per le immagini
                 double width = 48; // Larghezza desiderata
                 double height = 69; // Altezza desiderata
 
-                String imageUrl = isTrue ? "/spacca/spacca/images/dorso.png" : "/spacca/spacca/images/dorso2.png";
-
-                ImageView imageView = new ImageView(getClass().getResource(imageUrl).toExternalForm());
+                ImageView imageView = new ImageView(getClass().getResource("/spacca/spacca/images/j.jpg").toExternalForm());
                 imageView.setFitWidth(width);
                 imageView.setFitHeight(height);
                 spawnCarte.getChildren().add(imageView);
             }
 
-            // Aggiungi un ritardo di 10 secondi dopo l'esecuzione del for
-            Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(5), event -> {
-                // Codice da eseguire dopo il ritardo di 10 secondi
+            // Stampa dell'ArrayList di booleani
+            System.out.println("ArrayList di booleani mischiato:");
+            for (int i = 0; i < booleanList.size(); i++) {
+                System.out.println("Elemento " + i + ": " + booleanList.get(i));
+            }
 
-                spawnCarte.getChildren().clear();
+        }));
 
-                for (int i = 0; i < booleanList.size(); i++) {
-                    // Dimensioni desiderate per le immagini
-                    double width = 48; // Larghezza desiderata
-                    double height = 69; // Altezza desiderata
-
-                    ImageView imageView = new ImageView(getClass().getResource("/spacca/spacca/images/j.jpg").toExternalForm());
-                    imageView.setFitWidth(width);
-                    imageView.setFitHeight(height);
-                    spawnCarte.getChildren().add(imageView);
-                }
-
-                // Stampa dell'ArrayList di booleani
-                System.out.println("ArrayList di booleani mischiato:");
-                for (int i = 0; i < booleanList.size(); i++) {
-                    System.out.println("Elemento " + i + ": " + booleanList.get(i));
-                }
-
-            }));
-
-            timeline.play();
+        timeline.play();
 
     }
 
@@ -977,7 +982,6 @@ public class Controller {
 
                 boolean turnoG1 = false;
                 partitaCorrispondente.put("turnoG1", turnoG1);
-
 
 
                 // Scrivi le modifiche nel file JSON
@@ -1102,7 +1106,6 @@ public class Controller {
                 partitaCorrispondente.put("turnoG1", turnoG1);
 
 
-
                 // Scrivi le modifiche nel file JSON
                 try (FileWriter file = new FileWriter(filePath)) {
                     file.write(partite.toJSONString());
@@ -1147,7 +1150,7 @@ public class Controller {
                 // Verifica se il primo valore di booleanList è true
                 if (!booleanList.isEmpty() && (boolean) booleanList.get(0)) {
                     // Se il primo valore è true, richiama il metodo rimuoviVitaG2
-                    rimuoviVitaG2(partite, partitaCorrispondente,event);
+                    rimuoviVitaG2(partite, partitaCorrispondente, event);
                     boolean turnoG1 = true;
                     partitaCorrispondente.put("turnoG1", turnoG1);
                 }
@@ -1291,6 +1294,18 @@ public class Controller {
                     case "Congela":
                         imageUrl = "/spacca/spacca/images/Congela.png";
                         break;
+                    case "ScambioMano":
+                        imageUrl = "/spacca/spacca/images/ScambioMano.png";
+                        break;
+                    case "Scarta":
+                        imageUrl = "/spacca/spacca/images/Scarta.png";
+                        break;
+                    case "Rigenera":
+                        imageUrl = "/spacca/spacca/images/Rigenera.png";
+                        break;
+                    case "DoppioDanno":
+                        imageUrl = "/spacca/spacca/images/DoppioDanno.png";
+                        break;
                 }
 
                 // Dimensioni desiderate per le immagini
@@ -1301,11 +1316,11 @@ public class Controller {
                 ImageView imageView = new ImageView(getClass().getResource(imageUrl).toExternalForm());
                 imageView.setFitWidth(width);
                 imageView.setFitHeight(height);
-                if(getTurno(codicePartitaInserito)) {
+                if (getTurno(codicePartitaInserito)) {
                     imageView.setOnMouseClicked(event -> {
                         System.out.println("Immagine cliccata!");
                         // Avvia il metodo collegato all'evento
-                        giocaCarta(nomeCarta);
+                        giocaCarta(nomeCarta,event);
                     });
                 }
                 mazzoG1.getChildren().add(imageView);
@@ -1343,11 +1358,11 @@ public class Controller {
                 ImageView imageView = new ImageView(getClass().getResource(imageUrl).toExternalForm());
                 imageView.setFitWidth(width);
                 imageView.setFitHeight(height);
-                if(!getTurno(codicePartitaInserito)) {
+                if (!getTurno(codicePartitaInserito)) {
                     imageView.setOnMouseClicked(event -> {
                         System.out.println("Immagine cliccata!");
                         // Avvia il metodo collegato all'evento
-                        giocaCarta(nomeCarta);
+                        giocaCarta(nomeCarta, event);
                     });
                 }
                 mazzoG2.getChildren().add(imageView);
@@ -1358,7 +1373,7 @@ public class Controller {
         }
     }
 
-    public void giocaCarta(String nomeCarta){
+    public void giocaCarta(String nomeCarta,  javafx.scene.input.MouseEvent event) {
         boolean turno = getTurno(codicePartitaInserito);
 
         //GIOCATORE 2
@@ -1368,13 +1383,14 @@ public class Controller {
 
             JSONArray manoG2 = getArrayManoG2(codicePartitaInserito);
             // Il counter in questo for serve per rimuovere solo un elemento che ha quel nome dall'array mano
-            int counter=0;
+            int counter = 0;
             for (int i = 0; i < manoG2.size(); i++) {
-                if (manoG2.get(i).equals(nomeCarta)&&counter==0) {
+                if (manoG2.get(i).equals(nomeCarta) && counter == 0) {
                     manoG2.remove(i);
                     counter++;
                 }
             }
+
 
             try {
                 // Leggi il file JSON e ottieni l'oggetto JSON della partita in corso
@@ -1400,7 +1416,7 @@ public class Controller {
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
-                    switchCarte(nomeCarta);
+                    switchCarte(nomeCarta,event);
                     visualizzaMani();
                 } else {
                     System.out.println("Partita non trovata.");
@@ -1416,9 +1432,9 @@ public class Controller {
 
             JSONArray manoG1 = getArrayManoG1(codicePartitaInserito);
             // Il counter in questo for serve per rimuovere solo un elemento che ha quel nome dall'array mano
-            int counter=0;
+            int counter = 0;
             for (int i = 0; i < manoG1.size(); i++) {
-                if (manoG1.get(i).equals(nomeCarta)&&counter==0) {
+                if (manoG1.get(i).equals(nomeCarta) && counter == 0) {
                     manoG1.remove(i);
                     counter++;
                 }
@@ -1449,6 +1465,7 @@ public class Controller {
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
+                    switchCarte(nomeCarta,event);
                     visualizzaMani();
                 } else {
                     System.out.println("Partita non trovata.");
@@ -1461,10 +1478,10 @@ public class Controller {
 
     }
 
-    private void switchCarte(String nomeCarta) {
+    private void switchCarte(String nomeCarta,javafx.scene.input.MouseEvent event) {
         switch (nomeCarta) {
             case "Cura":
-                aggiungiVitaG1();
+                cura();
                 break;
             case "Congela":
                 //bloccaturno();
@@ -1479,22 +1496,32 @@ public class Controller {
                 rigeneraCarteAlCentro();
                 break;
             case "DoppioDanno":
-                doppioDanno();
+                doppioDanno(event);
                 break;
         }
     }
 
+    public void cura(){
+        boolean turno = getTurno(codicePartitaInserito);
 
-    public void pescaCarta(){
-        boolean turno=getTurno(codicePartitaInserito);
-        String cartaPescata= Partita.generaNomeCasuale();
+        if(turno){
+            aggiungiVitaG1();
+        } else {
+            aggiungiVitaG2();
+        }
+    }
+
+
+    public void pescaCarta() {
+        boolean turno = getTurno(codicePartitaInserito);
+        String cartaPescata = Partita.generaNomeCasuale();
 
         //G1 pesca
         //Controllare chi pesca la carta
         //se pesca G1, allora aggiorna la mano di G1 aggiungendo una carta presa a random
-        if(turno){
-            turno=false;
-            JSONArray manoG1=getArrayManoG1(codicePartitaInserito);
+        if (turno) {
+            turno = false;
+            JSONArray manoG1 = getArrayManoG1(codicePartitaInserito);
             //aggiorna la mano col nuovo elemento
             manoG1.add(cartaPescata);
             //
@@ -1531,46 +1558,46 @@ public class Controller {
             } catch (IOException | ParseException e) {
                 e.printStackTrace();
             }
-        } else{
+        } else {
             //turno G2
-            turno=true;
-                JSONArray manoG2=getArrayManoG1(codicePartitaInserito);
-                //aggiorna la mano col nuovo elemento
-                manoG2.add(cartaPescata);
-                //
-                try {
-                    // Leggi il file JSON e ottieni l'oggetto JSON della partita in corso
-                    JSONParser parser = new JSONParser();
-                    JSONArray partite = (JSONArray) parser.parse(new FileReader("src/main/resources/spacca/spacca/partite.json"));
-                    JSONObject partitaCorrente = null;
+            turno = true;
+            JSONArray manoG2 = getArrayManoG1(codicePartitaInserito);
+            //aggiorna la mano col nuovo elemento
+            manoG2.add(cartaPescata);
+            //
+            try {
+                // Leggi il file JSON e ottieni l'oggetto JSON della partita in corso
+                JSONParser parser = new JSONParser();
+                JSONArray partite = (JSONArray) parser.parse(new FileReader("src/main/resources/spacca/spacca/partite.json"));
+                JSONObject partitaCorrente = null;
 
-                    for (Object obj : partite) {
-                        JSONObject partita = (JSONObject) obj;
-                        String codice = (String) partita.get("codice");
-                        if (codice != null && codice.equals(codicePartitaInserito)) {
-                            partitaCorrente = partita;
-                            break;
-                        }
+                for (Object obj : partite) {
+                    JSONObject partita = (JSONObject) obj;
+                    String codice = (String) partita.get("codice");
+                    if (codice != null && codice.equals(codicePartitaInserito)) {
+                        partitaCorrente = partita;
+                        break;
                     }
-
-                    if (partitaCorrente != null) {
-                        partitaCorrente.put("manoG2", manoG2);
-                        partitaCorrente.put("turnoG1", turno);
-
-                        try (FileWriter fileWriter = new FileWriter("src/main/resources/spacca/spacca/partite.json")) {
-                            fileWriter.write(partite.toJSONString());
-                            System.out.println("Mano G1 aggiornata");
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
-                        visualizzaMani();
-                    } else {
-                        System.out.println("Partita non trovata.");
-                    }
-
-                } catch (IOException | ParseException e) {
-                    e.printStackTrace();
                 }
+
+                if (partitaCorrente != null) {
+                    partitaCorrente.put("manoG2", manoG2);
+                    partitaCorrente.put("turnoG1", turno);
+
+                    try (FileWriter fileWriter = new FileWriter("src/main/resources/spacca/spacca/partite.json")) {
+                        fileWriter.write(partite.toJSONString());
+                        System.out.println("Mano G2 aggiornata");
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                    visualizzaMani();
+                } else {
+                    System.out.println("Partita non trovata.");
+                }
+
+            } catch (IOException | ParseException e) {
+                e.printStackTrace();
+            }
         }
         visualizzaBottoni(codicePartitaInserito);
     }
@@ -1691,25 +1718,151 @@ public class Controller {
         }
     }
 
-    public void doppioDanno(){
+    public void doppioDanno(javafx.scene.input.MouseEvent event){
         //Prendi il JSON di carte al centro
         JSONArray booleanList = getArrayCarteAlCentroFromPartita(codicePartitaInserito);
 
-        //se l'elemento di indice 0 è true, allora rimuovi 2 vite a G2 e setta turno G1 su false, altrimenti nulla
-        if((boolean)booleanList.get(0)==true){
+        //Prendi dal JSON il turno
+        boolean turno = getTurno(codicePartitaInserito);
 
+        // Controlla il turno del giocatore e separa le casistiche
+        if(turno){
+            //se l'elemento di indice 0 è true, allora rimuovi 2 vite a G2 e setta turno G1 su false, altrimenti nulla
+            if((boolean)booleanList.get(0)==true){
+                try {
+                    JSONParser parser = new JSONParser();
+                    //Aggiorna dati nel JSON
+                    JSONArray partite = (JSONArray) parser.parse(new FileReader("src/main/resources/spacca/spacca/partite.json"));
+                    JSONObject partitaCorrente = null;
 
+                    for (Object obj : partite) {
+                        JSONObject partita = (JSONObject) obj;
+                        String codice = (String) partita.get("codice");
+                        if (codice != null && codice.equals(codicePartitaInserito)) {
+                            partitaCorrente = partita;
+                            break;
+                        }
+                    }
+
+                    if (partitaCorrente != null) {
+                        booleanList.remove(0);
+                        partitaCorrente.put("carteAlCentro", booleanList);
+                        int viteGiocatore2 = ((Long) partitaCorrente.get("viteGiocatore2")).intValue();
+                            viteGiocatore2=viteGiocatore2-2;
+                            partitaCorrente.put("viteGiocatore2", viteGiocatore2);
+                            turno=false;
+                            partitaCorrente.put("turnoG1", turno);
+
+                        try (FileWriter fileWriter = new FileWriter("src/main/resources/spacca/spacca/partite.json")) {
+                            fileWriter.write(partite.toJSONString());
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                        rimuoviImmagineCuore2();
+                        rimuoviImmagineCuore2();
+                        visualizzaMani();
+                        visualizzaCarteAlCentro();
+                        visualizzaBottoni(codicePartitaInserito);
+                        // Se dopo aver giocato la carta le vite del giocatore 1 finiscono, allora carica la view della vittoria
+                        if (viteGiocatore2 <= 0) {
+                            FXMLLoader loader = new FXMLLoader(getClass().getResource("vittoria_partita-view.fxml"));
+                            Parent root = loader.load();
+                            Controller vittoriaController = loader.getController();
+                            JSONArray sfidantiPartita = getArraySfidantiFromPartita(codicePartitaInserito);
+                            // Il vincitore è il giocatore 1
+                            String vincitore = ((String) sfidantiPartita.get(0));
+                            vittoriaController.setVincitore(vincitore);
+                            Scene scene = new Scene(root);
+                            Stage stage = new Stage();
+                            //Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+                            stage.setScene(scene);
+                            stage.show();
+                        }
+                    } else {
+                        System.out.println("Partita non trovata.");
+                    }
+
+                } catch (IOException | ParseException e) {
+                    e.printStackTrace();
+                }
+            }
+        } else {
+            //se l'elemento di indice 0 è true, allora rimuovi 2 vite a G1 e setta turnoG1 su true, altrimenti nulla
+            if((boolean)booleanList.get(0)==true){
+                try {
+                    JSONParser parser = new JSONParser();
+                    //Aggiorna dati nel JSON
+                    JSONArray partite = (JSONArray) parser.parse(new FileReader("src/main/resources/spacca/spacca/partite.json"));
+                    JSONObject partitaCorrente = null;
+
+                    for (Object obj : partite) {
+                        JSONObject partita = (JSONObject) obj;
+                        String codice = (String) partita.get("codice");
+                        if (codice != null && codice.equals(codicePartitaInserito)) {
+                            partitaCorrente = partita;
+                            break;
+                        }
+                    }
+
+                    if (partitaCorrente != null) {
+                        booleanList.remove(0);
+                        partitaCorrente.put("carteAlCentro", booleanList);
+                        int viteGiocatore1 = ((Long) partitaCorrente.get("viteGiocatore1")).intValue();
+                        viteGiocatore1=viteGiocatore1-2;
+                        partitaCorrente.put("viteGiocatore1", viteGiocatore1);
+                        turno=true;
+                        partitaCorrente.put("turnoG1", turno);
+
+                        try (FileWriter fileWriter = new FileWriter("src/main/resources/spacca/spacca/partite.json")) {
+                            fileWriter.write(partite.toJSONString());
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                        rimuoviImmagineCuore2();
+                        rimuoviImmagineCuore2();
+                        visualizzaMani();
+                        visualizzaCarteAlCentro();
+                        visualizzaBottoni(codicePartitaInserito);
+                        // Se dopo aver giocato la carta le vite del giocatore 1 finiscono, allora carica la view della vittoria
+                        if (viteGiocatore1 <= 0) {
+                            FXMLLoader loader = new FXMLLoader(getClass().getResource("vittoria_partita-view.fxml"));
+                            Parent root = loader.load();
+                            Controller vittoriaController = loader.getController();
+                            JSONArray sfidantiPartita = getArraySfidantiFromPartita(codicePartitaInserito);
+                            // Il vincitore è il giocatore 2
+                            String vincitore = ((String) sfidantiPartita.get(1));
+                            vittoriaController.setVincitore(vincitore);
+                            Scene scene = new Scene(root);
+                            Stage stage = new Stage();
+                            //Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+                            stage.setScene(scene);
+                            stage.show();
+                        }
+                    } else {
+                        System.out.println("Partita non trovata.");
+                    }
+
+                } catch (IOException | ParseException e) {
+                    e.printStackTrace();
+                }
+            }
 
         }
 
-        //richiamo visualizzaBottoni() per aggiornare la view dei pulsanti
-        visualizzaBottoni(codicePartitaInserito);
-
     }
 
-    public void doppioDannoG2(){
-        //Prendi in input
-    }
+
+
+
+
+
+
+
+
+
+
+
+
 
     // codice crea da tes come prova
 
