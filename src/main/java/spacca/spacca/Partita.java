@@ -84,37 +84,6 @@ public class Partita {
         return nomi[indice];
     }
 
-//    public ArrayList<Carta> generaMazzo() {
-//
-//        Random random = new Random();
-//
-//        //Distribuisco inizialmente 3 carte al giocatore
-//        int dimensione = 3;
-//
-//        ArrayList<Carta> mazzo = new ArrayList<>();
-//
-//        for (int i = 0; i < dimensione; i++) {
-//            int n = random.nextInt(Carta.Tipo.values().length);
-//            String s = Carta.Tipo.getTipo(n).toString();
-//            mazzo.add(new Carta(s + ".png", Carta.Tipo.getTipo(n)));
-//        }
-//        return mazzo;
-//    }
-
-//    public ArrayList<Carta.Tipo> generaMazzo() {
-//        Random random = new Random();
-//        ArrayList<Carta.Tipo> mazzo = new ArrayList<>();
-//        int dimensione = 3; // Genera 3 carte
-//
-//        for (int i = 0; i < dimensione; i++) {
-//            int indiceTipo = random.nextInt(Carta.Tipo.values().length); // Genera un indice casuale per il tipo di carta
-//            Carta.Tipo tipo = Carta.Tipo.getTipo(indiceTipo); // Ottiene il tipo di carta corrispondente all'indice casuale
-//            mazzo.add(tipo); // Aggiunge il tipo di carta al mazzo
-//        }
-//
-//        return mazzo;
-//    }
-
     private String generaCodicePartita() {
         // Genera un codice partita casuale di lunghezza 5
         String numeri = "0123456789";
