@@ -77,10 +77,6 @@ public class Partita {
     }
 
     public static String generaNomeCasuale() {
-        // Puoi implementare la logica per generare nomi casuali per le carte
-        // Ad esempio, puoi utilizzare un array di nomi predefiniti e selezionarne uno casualmente
-        // Oppure puoi generare un nome in base a qualche algoritmo
-        // Per il momento, restituiremo solo nomi di esempio
 
         String[] nomi = {"Cura", "Congela"};
         Random random = new Random();
