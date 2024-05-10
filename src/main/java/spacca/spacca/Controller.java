@@ -31,6 +31,8 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.net.URL;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -1306,6 +1308,9 @@ public class Controller {
                     case "DoppioDanno":
                         imageUrl = "/spacca/spacca/images/DoppioDanno.png";
                         break;
+                    case "Sbircia":
+                        imageUrl = "/spacca/spacca/images/Sbircia.png";
+                        break;
                 }
 
                 // Dimensioni desiderate per le immagini
@@ -1378,9 +1383,6 @@ public class Controller {
 
         //GIOCATORE 2
         if (!turno) {
-
-
-
             JSONArray manoG2 = getArrayManoG2(codicePartitaInserito);
             // Il counter in questo for serve per rimuovere solo un elemento che ha quel nome dall'array mano
             int counter = 0;
@@ -1390,7 +1392,6 @@ public class Controller {
                     counter++;
                 }
             }
-
 
             try {
                 // Leggi il file JSON e ottieni l'oggetto JSON della partita in corso
@@ -1428,8 +1429,6 @@ public class Controller {
 
         } else {
             //GIOCATORE 1
-
-
             JSONArray manoG1 = getArrayManoG1(codicePartitaInserito);
             // Il counter in questo for serve per rimuovere solo un elemento che ha quel nome dall'array mano
             int counter = 0;
@@ -1439,8 +1438,6 @@ public class Controller {
                     counter++;
                 }
             }
-
-
             try {
                 // Leggi il file JSON e ottieni l'oggetto JSON della partita in corso
                 JSONParser parser = new JSONParser();
@@ -1561,7 +1558,7 @@ public class Controller {
         } else {
             //turno G2
             turno = true;
-            JSONArray manoG2 = getArrayManoG1(codicePartitaInserito);
+            JSONArray manoG2 = getArrayManoG2(codicePartitaInserito);
             //aggiorna la mano col nuovo elemento
             manoG2.add(cartaPescata);
             //
@@ -1850,6 +1847,57 @@ public class Controller {
         }
 
     }
+
+    public void sbircia(){
+        JSONParser parser = new JSONParser();
+
+        try {
+            JSONArray booleanList = (JSONArray) parser.parse(getArrayCarteAlCentroFromPartita(codicePartitaInserito).toString());
+
+            spawnCarte.getChildren().clear();
+            boolean primaCarta = (boolean) booleanList.get(0);
+
+            // Dimensioni desiderate per le immagini
+            double width = 48; // Larghezza desiderata
+            double height = 69; // Altezza desiderata
+
+            String imageUrl = primaCarta ? "/spacca/spacca/images/dorso.png" : "/spacca/spacca/images/dorso2.png";
+
+            ImageView imageView = new ImageView(getClass().getResource(imageUrl).toExternalForm());
+            imageView.setFitWidth(width);
+            imageView.setFitHeight(height);
+            spawnCarte.getChildren().add(imageView);
+            if (booleanList.size() > 1) {
+                for (int i = 1; i < booleanList.size(); i++) {
+                    imageUrl = "/spacca/spacca/images/j.jpg";
+
+                    imageView = new ImageView(getClass().getResource(imageUrl).toExternalForm());
+                    imageView.setFitWidth(width);
+                    imageView.setFitHeight(height);
+                    spawnCarte.getChildren().add(imageView);
+                }
+            }
+            Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(5), event -> {
+                // Codice da eseguire dopo il ritardo di 5 secondi
+
+                spawnCarte.getChildren().clear();
+
+                for (int i = 0; i < booleanList.size(); i++) {
+                    ImageView image = new ImageView(getClass().getResource("/spacca/spacca/images/j.jpg").toExternalForm());
+                    image.setFitWidth(width);
+                    image.setFitHeight(height);
+                    spawnCarte.getChildren().add(image);
+                }
+            }));
+
+            timeline.play();
+
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+    }
+
+
 
 
 
