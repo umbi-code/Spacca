@@ -102,6 +102,36 @@ public class Controller {
     }
 
     @FXML
+    private void gestisciUtenti(ActionEvent event) throws IOException {
+        Parent root = FXMLLoader.load(getClass().getResource("gestisci_utenti-view.fxml"));
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        Scene scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
+    }
+
+    @FXML
+    private void gestisciPartite(ActionEvent event) throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("gestisci_partite-view.fxml"));
+        Parent root = loader.load();
+        Controller gestisciPartiteController = loader.getController();
+        gestisciPartiteController.setUsernameUtenteLoggato(usernameUtenteLoggato);
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        Scene scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
+    }
+
+    @FXML
+    private void gestisciTornei(ActionEvent event) throws IOException {
+        Parent root = FXMLLoader.load(getClass().getResource("gestisci_tornei-view.fxml"));
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        Scene scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
+    }
+
+    @FXML
     public void popolaChoiceBox() {
         // Carica gli username degli utenti presenti in admin_credentials.json
         List<String> usernames = caricaUsernameDaFile();
@@ -149,6 +179,7 @@ public class Controller {
 
     private String usernameUtenteLoggato;
 
+
     public void setUsernameUtenteLoggato(String username) {
         this.usernameUtenteLoggato = username;
     }
@@ -166,13 +197,14 @@ public class Controller {
             System.out.println("Accesso effettuato come utente admin " + username);
             usernameUtenteLoggato = username;
             // Carica la pagina crea_lobby_admin-view.fxml
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("crea_lobby_admin-view.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("scelta_admin-view.fxml"));
             Parent root = loader.load();
 
             // Ottieni il controller della nuova vista
             Controller accessoUtenteController = loader.getController();
             // Imposta il nome utente nel nuovo controller
             accessoUtenteController.setUsernameUtenteLoggato(username);
+            //bentornatoAdmin.setText(username);
 
             Scene scene = new Scene(root);
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
@@ -262,7 +294,44 @@ public class Controller {
     }
 
     @FXML
+    private void eliminaPartitaDaAdmin() {
+        String codiceElimina = codicePartitaDaEliminare.getText();
+        String filePath = "src/main/resources/spacca/spacca/partite.json";
+
+        try {
+            // Leggi il file JSON e ottieni l'oggetto JSON della partita in corso
+            JSONParser parser = new JSONParser();
+            JSONArray partite = (JSONArray) parser.parse(new FileReader(filePath));
+            JSONObject partitaCorrente = null;
+
+            for (Object obj : partite) {
+                JSONObject partita = (JSONObject) obj;
+                String codice = (String) partita.get("codice");
+                if (codice != null && codice.equals(codiceElimina)) {
+                    partitaCorrente = partita;
+                    break;
+                }
+            }
+            partite.remove(partitaCorrente);
+
+            // Scrivi le modifiche nel file JSON
+            try (FileWriter fileWriter = new FileWriter(filePath)) {
+                fileWriter.write(partite.toJSONString());
+                System.out.println("Partita rimossa con successo");
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+        } catch (IOException | ParseException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @FXML
     private TextField codicePartita;
+
+    @FXML
+    private TextField codicePartitaDaEliminare;
 
     @FXML
     private Label accessoLabel;
@@ -295,9 +364,9 @@ public class Controller {
 
     @FXML
     private FlowPane mazzoG1;
+
     @FXML
     private FlowPane mazzoG2;
-
 
     @FXML
     private void entraInGioco(ActionEvent event) throws IOException {
@@ -1745,10 +1814,10 @@ public class Controller {
                         booleanList.remove(0);
                         partitaCorrente.put("carteAlCentro", booleanList);
                         int viteGiocatore2 = ((Long) partitaCorrente.get("viteGiocatore2")).intValue();
-                            viteGiocatore2=viteGiocatore2-2;
-                            partitaCorrente.put("viteGiocatore2", viteGiocatore2);
-                            turno=false;
-                            partitaCorrente.put("turnoG1", turno);
+                        viteGiocatore2=viteGiocatore2-2;
+                        partitaCorrente.put("viteGiocatore2", viteGiocatore2);
+                        turno=false;
+                        partitaCorrente.put("turnoG1", turno);
 
                         try (FileWriter fileWriter = new FileWriter("src/main/resources/spacca/spacca/partite.json")) {
                             fileWriter.write(partite.toJSONString());
