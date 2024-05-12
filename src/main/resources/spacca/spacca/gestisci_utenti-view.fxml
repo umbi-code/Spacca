@@ -63,7 +63,7 @@
                                         <Font name="Arial Bold" size="27.0" />
                                     </font>
                                 </Text>
-                                <TextField fx:id="usernameRegistrationField" alignment="CENTER" prefHeight="51.0" prefWidth="363.0" promptText="Inserisci il nome dell'utente" style="-fx-border-radius: 20; -fx-background-radius: 20;">
+                                <TextField fx:id="usernameRegistrationField" alignment="CENTER" prefHeight="51.0" prefWidth="380.0" promptText="Inserisci il nome dell'utente" style="-fx-border-radius: 20; -fx-background-radius: 20;">
                                     <font>
                                         <Font size="24.0" />
                                     </font>
@@ -79,8 +79,13 @@
                                         <Font name="Arial Bold" size="27.0" />
                                     </font>
                                 </Text>
-                                <ChoiceBox fx:id="sfidante1" prefWidth="150.0" />
-                                <Button fx:id="creaUtente_button1" alignment="CENTER" mnemonicParsing="false" style="-fx-border-radius: 20; -fx-background-radius: 20;" text="Modifica il nome" textAlignment="CENTER" />
+                                <ChoiceBox fx:id="listaUtenti" prefWidth="150.0" />
+                        <TextField fx:id="nuovoNomeUtente" alignment="CENTER" prefHeight="51.0" prefWidth="374.0" promptText="Digita il nuovo nome dell'utente" style="-fx-border-radius: 20; -fx-background-radius: 20;">
+                           <font>
+                              <Font size="24.0" />
+                           </font>
+                        </TextField>
+                                <Button fx:id="modificaNomeUtente" alignment="CENTER" mnemonicParsing="false" onAction="#cambiaNomeUtente" style="-fx-border-radius: 20; -fx-background-radius: 20;" text="Modifica il nome" textAlignment="CENTER" />
                             </children>
                         </FlowPane>
                     </children>
