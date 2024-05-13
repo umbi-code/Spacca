@@ -22,6 +22,8 @@ public class Partita {
     private ArrayList<String> manoG1;
     private ArrayList<String> manoG2;
 
+    private String vincitore;
+
 
 
 
@@ -35,6 +37,7 @@ public class Partita {
         this.turnoG1=true;
         this.manoG1=generaMazzo();
         this.manoG2=generaMazzo();
+        this.vincitore="";
     }
 
     public static ArrayList<Boolean> CarteAlCentro() {
@@ -78,7 +81,7 @@ public class Partita {
 
     public static String generaNomeCasuale() {
 
-        String[] nomi = {"Cura", "Congela"};
+        String[] nomi = {"Cura","ScambioMano","Scarta","Rigenera","DoppioDanno","Sbircia"};
         Random random = new Random();
         int indice = random.nextInt(nomi.length);
         return nomi[indice];

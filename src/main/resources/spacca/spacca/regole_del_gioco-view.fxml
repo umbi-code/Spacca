@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.FlowPane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="spacca.spacca.RegoleDelGiocoView">
+   <children>
+      <FlowPane alignment="TOP_CENTER" columnHalignment="CENTER" orientation="VERTICAL" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Regole di Spacca:">
+               <font>
+                  <Font name="System Bold" size="31.0" />
+               </font>
+            </Text>
+            <FlowPane prefHeight="341.0" prefWidth="594.0" rowValignment="TOP">
+               <children>
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Spacca è un gioco di carte a turni in cui si svolgono sfide 1 vs 1. L'obiettivo del gioco è ridurre a zero le vite dell'avversario. La partita procede nel seguente modo: il giocatore 1 inizia e ha diverse opzioni: può giocare le carte effetto che ha in mano, pescare una carta effetto (il che passa il turno all'avversario) oppure giocare in 2 modi diversi le carte presenti al centro del tavolo. All'inizio del gioco, viene generato un numero casuale di carte al centro con valori casuali, le quali possono essere di colore rosso o nero. Le carte rosse infliggono danni all'avversario, mentre quelle nere no. All'inizio della partita, le carte al centro vengono mostrate, poi coperte e mischiate. Ad ogni turno, il giocatore può scegliere se pescare (passando il turno all'avversario) oppure giocare la prima carta a sinistra al centro, su di sé o sull'avversario. Se la carta giocata è nera e viene giocata su di sé, viene rimossa dal centro e il giocatore può rigiocare nel suo turno; se è rossa, il giocatore perde una vita e passa il turno all'avversario. Se la carta viene giocata sull'avversario e è nera, il turno passa all'avversario senza perdita di vite; se è rossa, invece, viene rimossa una vita all'avversario, che giocherà il suo turno successivamente. Ogni carta rossa giocata comporta la perdita di una vita. Quando le carte al centro terminano, vengono rigenerate con lo stesso criterio. La partita termina quando le vite di uno dei giocatori raggiungono lo zero, determinando la vittoria del sopravvissuto." wrappingWidth="597.0">
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                  </Text>
+               </children>
+            </FlowPane>
+         </children>
+      </FlowPane>
+   </children>
+</AnchorPane>
