@@ -87,6 +87,10 @@ public class Partita {
         return nomi[indice];
     }
 
+    public String getCodicePartita() {
+        return this.codicePartita;
+    }
+
     private String generaCodicePartita() {
         // Genera un codice partita casuale di lunghezza 5
         String numeri = "0123456789";
